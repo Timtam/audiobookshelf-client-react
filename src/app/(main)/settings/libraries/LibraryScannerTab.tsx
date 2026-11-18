@@ -22,6 +22,7 @@ const defaultMetadataSources: MetadataSource[] = [
   { id: 'nfoFile', name: 'NFO file', include: true },
   { id: 'txtFiles', name: 'desc.txt & reader.txt files', include: true },
   { id: 'opfFile', name: 'OPF file', include: true },
+  { id: 'daisyFile', name: 'DAISY ncc.html file', include: true },
   { id: 'absMetadata', name: 'Audiobookshelf metadata file', include: true }
 ]
 
