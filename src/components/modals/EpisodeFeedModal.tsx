@@ -354,7 +354,7 @@ export default function EpisodeFeedModal({ isOpen, onClose, libraryItem, episode
                       download
                     </span>
                   ) : (
-                    <div onClick={(e) => e.stopPropagation()} className="flex items-center justify-center">
+                    <div role="presentation" onClick={(e) => e.stopPropagation()} className="flex items-center justify-center">
                       <Checkbox
                         value={isSelected}
                         size="small"

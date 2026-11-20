@@ -123,7 +123,7 @@ export default function BookmarkItem({ bookmark, highlight, playbackRate, onSele
             <p className="text-foreground-muted font-mono text-sm">{displayTimestamp}</p>
           </div>
           <p className="min-w-0 flex-1 truncate px-2">{bookmark.title}</p>
-          <div className="flex shrink-0 items-center" onClick={stopRowSelect} onKeyDown={stopRowSelect}>
+          <div className="flex shrink-0 items-center" role="presentation" onClick={stopRowSelect} onKeyDown={stopRowSelect}>
             <IconBtn borderless size="small" className="text-foreground-muted" onClick={handleEditClick} ariaLabel={t('ButtonEdit')}>
               edit
             </IconBtn>

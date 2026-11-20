@@ -291,6 +291,7 @@ export default function UserAppBarNav() {
             ref={menuRef}
             className="bg-primary border-border z-9999 min-w-[200px] rounded-md border shadow-lg"
             style={floatingStyles}
+            role="presentation"
             onClick={(e) => e.stopPropagation()}
             onMouseDown={(e) => e.preventDefault()}
           >

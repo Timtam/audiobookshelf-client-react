@@ -217,6 +217,7 @@ export default function EpisodeRow({
                 e.stopPropagation()
               }
             }}
+            role="presentation"
             onClick={(e) => e.stopPropagation()}
           >
             <Checkbox value={isSelected} ariaLabel={episode.title} onChange={(checked, shiftKey) => onSelect(episode, checked, shiftKey, rowIndex)} />
@@ -224,7 +225,7 @@ export default function EpisodeRow({
         </div>
 
         <div className="@container mt-auto flex w-full items-center justify-between gap-1">
-          <div className="flex w-full items-center gap-1" onClick={(e) => e.stopPropagation()}>
+          <div className="flex w-full items-center gap-1" role="presentation" onClick={(e) => e.stopPropagation()}>
             <PodcastEpisodeListenActions
               playButtonLabel={playButtonLabel}
               isPlaying={episodeIsPlaying}
@@ -260,7 +261,7 @@ export default function EpisodeRow({
             )}
 
             {contextMenuItems.length > 0 && (
-              <div onClick={(e) => e.stopPropagation()} className="shrink-0">
+              <div role="presentation" onClick={(e) => e.stopPropagation()} className="shrink-0">
                 <ContextMenuDropdown
                   items={contextMenuItems}
                   autoWidth
