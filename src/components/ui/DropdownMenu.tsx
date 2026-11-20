@@ -527,13 +527,17 @@ export default function DropdownMenu({
             </div>
             {hasSubitems && (
               <div className="pointer-events-none absolute inset-y-0 right-2 flex h-full items-center">
-                <span className="material-symbols text-lg">arrow_right</span>
+                <span className="material-symbols text-lg" aria-hidden="true">
+                  arrow_right
+                </span>
               </div>
             )}
             {item.rightIcon && !hasSubitems && <div className="pointer-events-none absolute inset-y-0 right-2 flex h-full items-center">{item.rightIcon}</div>}
             {showSelectedIndicator && isItemSelected && isItemSelected(item) && !hasSubitems && (
               <span className="absolute inset-y-0 inset-e-0 flex items-center pe-4">
-                <span className="material-symbols text-dropdown-item-selected text-xl">check</span>
+                <span className="material-symbols text-dropdown-item-selected text-xl" aria-hidden="true">
+                  check
+                </span>
               </span>
             )}
 

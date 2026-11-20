@@ -480,7 +480,11 @@ export default function Dropdown({
               </span>
             </span>
             <span className="pointer-events-none ms-3 flex shrink-0 items-center">
-              {rightIcon || <span className="material-symbols text-2xl">expand_more</span>}
+              {rightIcon || (
+                <span className="material-symbols text-2xl" aria-hidden="true">
+                  expand_more
+                </span>
+              )}
             </span>
           </button>
         </InputWrapper>

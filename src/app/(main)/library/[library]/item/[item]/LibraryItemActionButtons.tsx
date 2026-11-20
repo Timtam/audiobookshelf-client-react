@@ -192,14 +192,18 @@ export default function LibraryItemActionButtons({
             size="small"
             className="mr-2 flex h-9 items-center px-4"
           >
-            <span className="material-symbols fill -ml-2 pr-1 text-2xl">{isItemPlaying ? 'pause' : 'play_arrow'}</span>
+            <span className="material-symbols fill -ml-2 pr-1 text-2xl" aria-hidden="true">
+              {isItemPlaying ? 'pause' : 'play_arrow'}
+            </span>
             {isItemPlaying ? t('ButtonPause') : t('ButtonPlay')}
           </Btn>
         )}
 
         {!showPlayButton && (libraryItem.isMissing || libraryItem.isInvalid) && (
           <Btn color="bg-error text-error-foreground" size="small" className="mr-2 flex h-9 cursor-default items-center px-4" aria-disabled>
-            <span className="material-symbols -ml-2 pr-1 text-2xl">error</span>
+            <span className="material-symbols -ml-2 pr-1 text-2xl" aria-hidden="true">
+              error
+            </span>
             {libraryItem.isMissing ? t('LabelMissing') : t('LabelIncomplete')}
           </Btn>
         )}

@@ -159,7 +159,9 @@ export default function GlobalSearchMenu({
             ) : (
               // Placeholder or Icon for items without images (Tags/Genres)
               <div className="bg-bg-secondary flex h-8 w-8 shrink-0 items-center justify-center rounded-full">
-                <span className="material-symbols text-lg text-gray-400">{getMaterialSymbolIcon(result.type)}</span>
+                <span className="material-symbols text-lg text-gray-400" aria-hidden="true">
+                  {getMaterialSymbolIcon(result.type)}
+                </span>
               </div>
             )}
 

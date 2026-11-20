@@ -123,7 +123,9 @@ export default function BatchEpisodeMapDetailsPanel({ episodes, onApply, onHasSe
   return (
     <div className="border-foreground/15 mx-auto mt-5 mb-10 max-w-7xl border">
       <button type="button" className="flex w-full cursor-pointer items-center px-4 py-4 text-start" onClick={() => setOpen((v) => !v)} aria-expanded={open}>
-        <span className="material-symbols shrink-0 text-2xl">{open ? 'expand_less' : 'expand_more'}</span>
+        <span className="material-symbols shrink-0 text-2xl" aria-hidden="true">
+          {open ? 'expand_less' : 'expand_more'}
+        </span>
         <p className="text-foreground-muted ms-4 min-w-0 text-lg">{t('HeaderMapDetails')}</p>
       </button>
 

@@ -190,7 +190,9 @@ export default function SleepTimerModal({
                         ariaLabel={t('AriaLabelJumpBackwardWithDuration', { 0: thirtyMinutesLabel })}
                         onClick={() => handleDecrement(30 * 60)}
                       >
-                        <span className="material-symbols text-lg">remove</span>
+                        <span className="material-symbols text-lg" aria-hidden="true">
+                          remove
+                        </span>
                         <span className="ps-1 text-sm">{thirtyMinutesLabel}</span>
                       </Btn>
 
@@ -222,7 +224,9 @@ export default function SleepTimerModal({
                         ariaLabel={t('AriaLabelJumpForwardWithDuration', { 0: thirtyMinutesLabel })}
                         onClick={() => onIncrement(30 * 60)}
                       >
-                        <span className="material-symbols text-lg">add</span>
+                        <span className="material-symbols text-lg" aria-hidden="true">
+                          add
+                        </span>
                         <span className="ps-1 text-sm">{thirtyMinutesLabel}</span>
                       </Btn>
                     </div>

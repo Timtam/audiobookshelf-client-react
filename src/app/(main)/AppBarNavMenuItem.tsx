@@ -16,7 +16,9 @@ interface AppBarNavMenuItemProps {
 export default function AppBarNavMenuItem({ id, className, ariaLabel, tabIndex, icon, label, href, onClick }: AppBarNavMenuItemProps) {
   const content = (
     <>
-      <span className="material-symbols mr-3 text-xl">{icon}</span>
+      <span className="material-symbols mr-3 text-xl" aria-hidden="true">
+        {icon}
+      </span>
       <span className="text-sm">{label}</span>
     </>
   )

@@ -214,7 +214,11 @@ export default function MatchCard({ book, isPodcast = false, currentBookDuration
             <h1>
               <div className="flex items-center">
                 {book.title}
-                {book.explicit && <span className="material-symbols text-error ms-1 text-sm">explicit</span>}
+                {book.explicit && (
+                  <span className="material-symbols text-error ms-1 text-sm" role="img" aria-label={t('LabelExplicit')}>
+                    explicit
+                  </span>
+                )}
               </div>
             </h1>
             {book.author && <p className="text-foreground-muted truncate text-base whitespace-nowrap">{t('LabelByAuthor', { 0: book.author })}</p>}

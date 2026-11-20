@@ -31,7 +31,9 @@ export default function SettingsContent(props: {
         <div className={mergeClasses('mb-2 flex items-center gap-2', !hasMobileHeaderContent && 'max-md:hidden')}>
           {props.backLink && (
             <Link aria-label={t('ButtonBack')} href={props.backLink} className="text-foreground-muted hover:text-foreground hidden md:inline-flex">
-              <span className="material-symbols text-xl">arrow_back</span>
+              <span className="material-symbols text-xl" aria-hidden="true">
+                arrow_back
+              </span>
             </Link>
           )}
           <h1 className="hidden text-xl md:block">{props.title}</h1>

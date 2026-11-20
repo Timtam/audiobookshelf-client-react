@@ -65,7 +65,9 @@ export default function PlayerTitleAuthor({ streamLibraryItem, metadata, onNavig
         <PlayerMarqueeText href={`/library/${libraryId}/item/${streamLibraryItem.id}`} text={displayTitle} onNavigate={handleNavigate} />
       </div>
       <div className={mergeClasses('player-author', layoutClass(AUTHOR, layout), compact && 'hidden')}>
-        <span className="material-symbols shrink-0 text-sm">person</span>
+        <span className="material-symbols shrink-0 text-sm" role="img" aria-label={t('LabelAuthor')}>
+          person
+        </span>
         {hasAuthorLine ? (
           <PlayerMarqueeAuthorLine libraryId={libraryId} bookAuthors={bookAuthors} podcastAuthor={podcastAuthor} onNavigate={handleNavigate} />
         ) : (
@@ -74,7 +76,9 @@ export default function PlayerTitleAuthor({ streamLibraryItem, metadata, onNavig
       </div>
       {durationLabel && (
         <div className={mergeClasses('player-duration', layoutClass(DURATION, layout), compact && 'hidden')}>
-          <span className="material-symbols text-foreground-muted shrink-0 text-xs">schedule</span>
+          <span className="material-symbols text-foreground-muted shrink-0 text-xs" role="img" aria-label={t('LabelDuration')}>
+            schedule
+          </span>
           <span className="ps-0.5 font-mono">{durationLabel}</span>
         </div>
       )}

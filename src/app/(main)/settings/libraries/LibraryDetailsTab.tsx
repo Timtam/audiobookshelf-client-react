@@ -99,7 +99,9 @@ export default function LibraryDetailsTab({
           {/* Committed folder paths */}
           {formData.folders.map((folder, index) => (
             <div key={index} className="flex items-center gap-2">
-              <span className="material-symbols fill text-xl text-yellow-200">folder</span>
+              <span className="material-symbols fill text-xl text-yellow-200" aria-hidden="true">
+                folder
+              </span>
               <TextInput value={folder.fullPath} readOnly className="flex-1 text-sm" />
               <div className="w-5">
                 <button
@@ -116,7 +118,9 @@ export default function LibraryDetailsTab({
 
           {/* Always-visible new folder input */}
           <div className="flex items-center gap-2">
-            <span className="material-symbols fill text-xl text-yellow-200/50">create_new_folder</span>
+            <span className="material-symbols fill text-xl text-yellow-200/50" aria-hidden="true">
+              create_new_folder
+            </span>
             <TextInput
               value={newFolderPath}
               placeholder={t('PlaceholderNewFolderPath')}
