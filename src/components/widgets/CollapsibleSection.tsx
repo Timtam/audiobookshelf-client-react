@@ -131,8 +131,9 @@ export default function CollapsibleSection({
 
   return (
     <div className={mergeClasses('w-full', className)}>
-      {/* Header - clickable to toggle */}
-      <div id={headerId} className={headerClasses} onClick={handleHeaderClick}>
+      {/* Header - clickable to toggle. In the capture phase, so that React does not mark the header as
+          clickable for screen readers, which have the toggle button. */}
+      <div id={headerId} className={headerClasses} onClickCapture={handleHeaderClick}>
         <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1 border-none bg-transparent p-0 text-left text-inherit md:gap-2">
           <div className="flex min-w-0 shrink-0 items-center gap-2">
             <h2 className="overflow-hidden font-medium text-ellipsis whitespace-nowrap">{title}</h2>

@@ -3,6 +3,7 @@
 import IconBtn from '@/components/ui/IconBtn'
 import { TooltipCore } from '@/components/ui/Tooltip'
 import { usePrimaryInputCanHover } from '@/hooks/useMediaQuery'
+import { useTypeSafeTranslations } from '@/hooks/useTypeSafeTranslations'
 import { mergeClasses } from '@/lib/merge-classes'
 
 interface HelpTooltipIconProps {
@@ -17,6 +18,7 @@ const iconClassMap: Record<'sm' | 'lg', string> = {
 }
 
 export default function HelpTooltipIcon({ text, size = 'lg', ariaLabel }: HelpTooltipIconProps) {
+  const t = useTypeSafeTranslations()
   const primaryInputCanHover = usePrimaryInputCanHover()
   const openOnClick = !primaryInputCanHover
   const resolvedAriaLabel = ariaLabel ?? (typeof text === 'string' ? text : undefined)
@@ -36,6 +38,8 @@ export default function HelpTooltipIcon({ text, size = 'lg', ariaLabel }: HelpTo
         borderless
         size="custom"
         ariaLabel={resolvedAriaLabel ?? 'Help'}
+        // Pressing it only shows its own name as a tooltip, so a screen reader announces it as information, not as a button
+        aria-roledescription={t('LabelInformation')}
         iconClass={iconClassMap[size]}
         className={mergeClasses('h-auto min-h-0 w-auto shadow-none', openOnClick ? 'cursor-pointer' : 'cursor-default')}
       >
