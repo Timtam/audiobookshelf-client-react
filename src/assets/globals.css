@@ -21,6 +21,12 @@
 @custom-variant max-sm (@media (max-width: 39.99rem), @media (orientation: landscape) and (max-height: theme(--compact-landscape-max-height)));
 @custom-variant max-md (@media (max-width: 47.99rem), @media (orientation: landscape) and (max-height: theme(--compact-landscape-max-height)));
 
+/*
+ * A button that gets disabled while it has the keyboard focus keeps the focus and is only marked with
+ * aria-disabled (see ButtonBase). The disabled styles have to apply to it all the same.
+ */
+@custom-variant disabled (&:is(:disabled, [aria-disabled='true']));
+
 :root {
   --header-height: 64px;
 }
