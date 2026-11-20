@@ -176,7 +176,7 @@ export default function RssFeedsTable({ rssFeeds: initialFeeds }: RssFeedsTableP
     {
       label: '',
       accessor: (rssFeed) => (
-        <div className="flex items-center justify-end gap-1" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-end gap-1" role="presentation" onClick={(e) => e.stopPropagation()}>
           <IconBtn
             ariaLabel={t('ButtonCloseFeed')}
             borderless

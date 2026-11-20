@@ -41,7 +41,7 @@ export default function PodcastEpisodeListenActions({
 
       {showQueueButton && onQueueToggle && (
         <Tooltip lazy position="top" text={isQueued ? t('MessageRemoveFromPlayerQueue') : t('MessageAddToPlayerQueue')}>
-          <span onClick={(e) => e.stopPropagation()}>
+          <span role="presentation" onClick={(e) => e.stopPropagation()}>
             <IconBtn
               borderless
               className={mergeClasses(EPISODE_ROW_ACTION_BTN_CLASS, isQueued && 'text-success hover:not-disabled:text-success')}
@@ -55,7 +55,7 @@ export default function PodcastEpisodeListenActions({
       )}
 
       <Tooltip lazy position="top" text={isFinished ? t('MessageMarkAsNotFinished') : t('MessageMarkAsFinished')}>
-        <span onClick={(e) => e.stopPropagation()}>
+        <span role="presentation" onClick={(e) => e.stopPropagation()}>
           <ReadIconBtn
             borderless
             disabled={isProcessingFinished}
@@ -68,7 +68,7 @@ export default function PodcastEpisodeListenActions({
       </Tooltip>
 
       <Tooltip lazy position="top" text={t('LabelAddToPlaylist')}>
-        <span onClick={(e) => e.stopPropagation()}>
+        <span role="presentation" onClick={(e) => e.stopPropagation()}>
           <IconBtn borderless className={EPISODE_ROW_ACTION_BTN_CLASS} ariaLabel={t('LabelAddToPlaylist')} onClick={onAddToPlaylist}>
             playlist_add
           </IconBtn>

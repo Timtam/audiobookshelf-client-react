@@ -125,7 +125,7 @@ export default function RecentEpisodeRow({ episode, episodeIndex, episodes }: Re
         <div className="mb-2 flex min-w-0 md:hidden">
           <PreviewCover src={coverSrc} width={48} bookCoverAspectRatio={bookCoverAspectRatio} showResolution={false} />
           <div className="min-w-0 flex-1 px-2">
-            <div className="flex min-w-0 items-center gap-1" onClick={(e) => e.stopPropagation()}>
+            <div className="flex min-w-0 items-center gap-1" role="presentation" onClick={(e) => e.stopPropagation()}>
               <Link href={itemHref} className="text-foreground-muted hover:text-foreground link-underline min-w-0 flex-1 text-sm wrap-break-word">
                 {podcastTitle}
               </Link>
@@ -136,7 +136,7 @@ export default function RecentEpisodeRow({ episode, episodeIndex, episodes }: Re
         </div>
 
         <div className="hidden md:block">
-          <div className="flex min-w-0 items-center gap-1" onClick={(e) => e.stopPropagation()}>
+          <div className="flex min-w-0 items-center gap-1" role="presentation" onClick={(e) => e.stopPropagation()}>
             <Link href={itemHref} className="text-foreground-muted hover:text-foreground link-underline min-w-0 text-sm wrap-break-word">
               {podcastTitle}
             </Link>
@@ -182,7 +182,7 @@ export default function RecentEpisodeRow({ episode, episodeIndex, episodes }: Re
           />
         )}
 
-        <div onClick={(e) => e.stopPropagation()}>
+        <div role="presentation" onClick={(e) => e.stopPropagation()}>
           <PodcastEpisodeListenActions
             playButtonLabel={playButtonLabel}
             isPlaying={episodeIsPlaying}

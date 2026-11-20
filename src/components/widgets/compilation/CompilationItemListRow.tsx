@@ -448,7 +448,7 @@ function CompilationItemListRowBody({
               </IconBtn>
             )}
             {contextMenuItems.length > 0 && (
-              <div onClick={(e) => e.stopPropagation()}>
+              <div role="presentation" onClick={(e) => e.stopPropagation()}>
                 <ContextMenuDropdown
                   items={contextMenuItems}
                   borderless

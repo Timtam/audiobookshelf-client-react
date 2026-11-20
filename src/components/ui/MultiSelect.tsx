@@ -573,12 +573,12 @@ export function MultiSelect<T = string>({
         </Label>
       )}
       <div ref={wrapperRef} className="relative">
-        <InputWrapper disabled={disabled} inputRef={inputRef} size="auto" className="min-h-10">
+        {/* The click handler is on the wrapper and not on the list, because a screen reader announces a list with a click handler as clickable */}
+        <InputWrapper disabled={disabled} inputRef={inputRef} size="auto" className="min-h-10" onClick={handleInputWrapperClick}>
           <div
             ref={inputWrapperRef}
             role="list"
             className={mergeClasses('relative flex w-full flex-wrap items-center py-1', disabled ? 'text-disabled cursor-not-allowed' : 'cursor-text')}
-            onClick={handleInputWrapperClick}
             onMouseDown={(e) => e.preventDefault()}
           >
             {selectedItems.map((item, idx) => (

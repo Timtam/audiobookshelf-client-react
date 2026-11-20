@@ -140,7 +140,7 @@ export default function UsersTable({ users, dateFormat, timeFormat, onEditUser }
         const showDelete = user.type !== 'root' && user.id !== currentUser.id
 
         return (
-          <div className="flex items-center justify-end gap-1" onClick={(e) => e.stopPropagation()}>
+          <div className="flex items-center justify-end gap-1" role="presentation" onClick={(e) => e.stopPropagation()}>
             {showEdit ? (
               <IconBtn
                 ariaLabel={t('ButtonUserEdit', { 0: user.username })}
