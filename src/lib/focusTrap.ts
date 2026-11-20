@@ -20,7 +20,8 @@ interface TabTrapEvent {
 export function trapTabKey(event: TabTrapEvent, container: HTMLElement | null, fallback?: HTMLElement | null): void {
   if (event.key !== 'Tab' || !container) return
 
-  const focusable = getFocusableElements(container)
+  // Only the controls that the Tab key reaches. Of a tab list that is the selected tab, not the first one.
+  const focusable = getFocusableElements(container).filter((element) => element.tabIndex >= 0)
   const first = focusable[0]
   const last = focusable[focusable.length - 1]
 
