@@ -90,10 +90,13 @@ function ExpandableHtml({ html, lineClamp = 4, className = '' }: ExpandableHtmlP
         <button
           type="button"
           className="text-foreground-muted hover:text-foreground focus-visible:outline-foreground mt-2 flex items-center gap-1 rounded ps-1 text-[0.875em] font-semibold select-none focus-visible:outline-1 focus-visible:outline-offset-1"
+          aria-expanded={isExpanded}
           onClick={() => setIsExpanded(!isExpanded)}
         >
           {isExpanded ? t('ButtonReadLess') : t('ButtonReadMore')}
-          <span className={`material-symbols text-[1.125em] transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>expand_more</span>
+          <span className={`material-symbols text-[1.125em] transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} aria-hidden="true">
+            expand_more
+          </span>
         </button>
       )}
     </div>

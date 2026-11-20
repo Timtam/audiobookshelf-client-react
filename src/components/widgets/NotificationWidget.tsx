@@ -97,6 +97,7 @@ export default function NotificationWidget({ className = '', fallbackLibraryId }
         className="text-foreground hover:text-foreground/80 relative flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center md:h-10 md:w-10"
         aria-haspopup="listbox"
         aria-expanded={showMenu}
+        aria-label={tasksRunning ? t('LabelTasks') : t('LabelActivities')}
         onClick={clickShowMenu}
       >
         {tasksRunning ? (
@@ -109,7 +110,7 @@ export default function NotificationWidget({ className = '', fallbackLibraryId }
         ) : (
           <Tooltip text={t('LabelActivities')} position="bottom">
             <span className="relative">
-              <span className="material-symbols text-xl" aria-label={t('LabelActivities')} role="button">
+              <span className="material-symbols text-xl" aria-hidden="true">
                 notifications
               </span>
               {showUnseenSuccessIndicator && <span className="bg-success pointer-events-none absolute -top-1 -right-0.5 h-2 w-2 rounded-full" />}

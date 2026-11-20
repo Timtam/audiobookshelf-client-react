@@ -291,10 +291,13 @@ function CompilationItemListRowBody({
             <div
               ref={sortableDragHandleProps.setActivatorNodeRef}
               className={mergeClasses('drag-handle flex items-center justify-center', DRAG_HANDLE_GRAB_CURSOR, DRAG_HANDLE_COARSE_POINTER_MIN_TOUCH)}
+              aria-label={t('TooltipCollectionDragHandle')}
               {...sortableDragHandleProps.attributes}
               {...sortableDragHandleProps.listeners}
             >
-              <span className="material-symbols text-foreground-subdued hover:text-foreground text-[1.125em] leading-none md:text-[1.25em]">menu</span>
+              <span className="material-symbols text-foreground-subdued hover:text-foreground text-[1.125em] leading-none md:text-[1.25em]" aria-hidden="true">
+                menu
+              </span>
             </div>
           </div>
         )}
@@ -333,7 +336,9 @@ function CompilationItemListRowBody({
                     onClick={handlePlayClick}
                     aria-label={t('ButtonPlay')}
                   >
-                    <span className="material-symbols fill text-[1.5em] text-white">play_arrow</span>
+                    <span className="material-symbols fill text-[1.5em] text-white" aria-hidden="true">
+                      play_arrow
+                    </span>
                   </button>
                 </div>
               )}

@@ -219,7 +219,7 @@ export default function EpisodeRow({
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <Checkbox value={isSelected} onChange={(checked, shiftKey) => onSelect(episode, checked, shiftKey, rowIndex)} />
+            <Checkbox value={isSelected} ariaLabel={episode.title} onChange={(checked, shiftKey) => onSelect(episode, checked, shiftKey, rowIndex)} />
           </div>
         </div>
 
@@ -243,6 +243,7 @@ export default function EpisodeRow({
               <IconBtn
                 borderless
                 className="shrink-0"
+                ariaLabel={t('ButtonEdit')}
                 onClick={(e) => {
                   e.stopPropagation()
                   onEdit?.(episode)
@@ -253,7 +254,7 @@ export default function EpisodeRow({
             )}
 
             {userCanDelete && (
-              <IconBtn borderless className="shrink-0" onClick={handleDeleteClick}>
+              <IconBtn borderless className="shrink-0" ariaLabel={t('ButtonDelete')} onClick={handleDeleteClick}>
                 delete
               </IconBtn>
             )}

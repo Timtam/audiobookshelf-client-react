@@ -248,10 +248,21 @@ export default function CoverEdit({ libraryItem }: CoverEditProps) {
                     'absolute top-1 right-1 h-8 w-8 rounded-full p-1 text-red-500',
                     isPendingUpdate ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:text-red-400'
                   )}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={t('LabelRemoveCover')}
+                  aria-disabled={isPendingUpdate}
                   onClick={isPendingUpdate ? undefined : handleRemoveCover}
+                  onKeyDown={(e) => {
+                    if (isPendingUpdate || (e.key !== 'Enter' && e.key !== ' ')) return
+                    e.preventDefault()
+                    handleRemoveCover()
+                  }}
                 >
                   <Tooltip text={t('LabelRemoveCover')} position="top">
-                    <span className="material-symbols text-2xl">delete</span>
+                    <span className="material-symbols text-2xl" aria-hidden="true">
+                      delete
+                    </span>
                   </Tooltip>
                 </div>
               )}

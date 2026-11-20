@@ -300,7 +300,7 @@ export default function EpisodeFeedModal({ isOpen, onClose, libraryItem, episode
             <Btn className="px-4" onClick={() => setSortDescending(!sortDescending)}>
               <span className="pr-4">{t('LabelSortPubDate')}</span>
               <span className="absolute inset-y-0 right-0 flex items-center pr-2 text-yellow-400">
-                <span className="material-symbols text-xl" aria-label={sortDescending ? t('LabelSortDescending') : t('LabelSortAscending')}>
+                <span className="material-symbols text-xl" role="img" aria-label={sortDescending ? t('LabelSortDescending') : t('LabelSortAscending')}>
                   {sortDescending ? 'expand_more' : 'expand_less'}
                 </span>
               </span>
@@ -346,12 +346,21 @@ export default function EpisodeFeedModal({ isOpen, onClose, libraryItem, episode
               >
                 <div className="flex w-12 flex-none items-center justify-center p-3 sm:w-16">
                   {episode.isDownloaded ? (
-                    <span className="material-symbols text-success text-xl">download_done</span>
+                    <span className="material-symbols text-success text-xl" role="img" aria-label={t('LabelAlreadyInYourLibrary')}>
+                      download_done
+                    </span>
                   ) : episode.isDownloading ? (
-                    <span className="material-symbols text-warning text-xl">download</span>
+                    <span className="material-symbols text-warning text-xl" role="img" aria-label={t('MessageDownloadingEpisode')}>
+                      download
+                    </span>
                   ) : (
                     <div onClick={(e) => e.stopPropagation()} className="flex items-center justify-center">
-                      <Checkbox value={isSelected} size="small" onChange={(checked, shiftKey) => selectEpisode(episode, checked, shiftKey, index)} />
+                      <Checkbox
+                        value={isSelected}
+                        size="small"
+                        ariaLabel={episode.title}
+                        onChange={(checked, shiftKey) => selectEpisode(episode, checked, shiftKey, index)}
+                      />
                     </div>
                   )}
                 </div>

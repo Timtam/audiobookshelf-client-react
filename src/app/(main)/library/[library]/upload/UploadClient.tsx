@@ -429,6 +429,7 @@ export default function UploadClient() {
                     {!uploadProcessing && !item.isUploading && (
                       <IconBtn
                         className="bg-bg border-border absolute -top-3 -right-3 h-8 w-8 rounded-full border"
+                        ariaLabel={t('ButtonRemove')}
                         onClick={() => handleRemoveStagedItem(index)}
                       >
                         close
@@ -456,7 +457,9 @@ export default function UploadClient() {
                               <TextInput value={item.author} onChange={(value) => handleItemPropertyChange(index, 'author', value)} />
                             </div>
                             <Tooltip text={t('LabelUploaderItemFetchMetadataHelp')}>
-                              <IconBtn onClick={() => handleFetchMetadata(index)}>sync</IconBtn>
+                              <IconBtn ariaLabel={t('LabelAutoFetchMetadata')} onClick={() => handleFetchMetadata(index)}>
+                                sync
+                              </IconBtn>
                             </Tooltip>
                           </div>
                         </div>

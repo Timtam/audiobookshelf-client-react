@@ -215,6 +215,7 @@ export default function EreaderOverlay({
               className="material-symbols text-2xl opacity-80 hover:opacity-100 disabled:opacity-30"
               disabled={!canZoomOut}
               onClick={() => foliateRef.current?.zoomOut()}
+              aria-label={t('ButtonZoomOut')}
             >
               zoom_out
             </button>
@@ -223,6 +224,7 @@ export default function EreaderOverlay({
               className="material-symbols text-2xl opacity-80 hover:opacity-100 disabled:opacity-30"
               disabled={!canZoomIn}
               onClick={() => foliateRef.current?.zoomIn()}
+              aria-label={t('ButtonZoomIn')}
             >
               zoom_in
             </button>
@@ -241,7 +243,9 @@ export default function EreaderOverlay({
           disabled={isLoading}
           aria-label={t('ButtonPrevious')}
         >
-          <span className="material-symbols text-5xl opacity-80">chevron_left</span>
+          <span className="material-symbols text-5xl opacity-80" aria-hidden="true">
+            chevron_left
+          </span>
         </button>
         <div className="relative min-h-0 min-w-0 flex-1">
           <FoliateView
@@ -287,7 +291,9 @@ export default function EreaderOverlay({
           disabled={isLoading}
           aria-label={t('ButtonNext')}
         >
-          <span className="material-symbols text-5xl opacity-80">chevron_right</span>
+          <span className="material-symbols text-5xl opacity-80" aria-hidden="true">
+            chevron_right
+          </span>
         </button>
 
         <EreaderTocDrawer
