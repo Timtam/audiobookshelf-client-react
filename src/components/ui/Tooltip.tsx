@@ -289,7 +289,11 @@ function TooltipCore({
     }
   }
 
-  const handleReferenceClick = openOnClick || closeOnClick || activateOnFocus ? onReferenceClick : undefined
+  // React puts a native click handler on an element with onClick, and a screen reader then announces the
+  // wrapper as clickable, on top of the button inside it. Only a tooltip that opens on click needs that
+  // handler (for taps on touch devices). The others listen in the capture phase, which React does not mark.
+  const handleReferenceClick = openOnClick ? onReferenceClick : undefined
+  const handleReferenceClickCapture = !openOnClick && (closeOnClick || activateOnFocus) ? onReferenceClick : undefined
 
   /** Bubble phase: cancel pending/open tooltips when the user presses a child control (e.g. tap on mobile). */
   const onReferencePointerDown = () => {
@@ -411,6 +415,7 @@ function TooltipCore({
       onFocus={activateOnFocus ? onFocus : undefined}
       onBlur={activateOnFocus ? onBlur : undefined}
       onClick={handleReferenceClick}
+      onClickCapture={handleReferenceClickCapture}
       aria-describedby={tooltipId}
     >
       {children}
