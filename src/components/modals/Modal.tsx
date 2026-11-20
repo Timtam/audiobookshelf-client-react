@@ -7,7 +7,7 @@ import { getTopmostModalElement, useModalHistory } from '@/hooks/useModalHistory
 import { useTypeSafeTranslations } from '@/hooks/useTypeSafeTranslations'
 import { trapTabKey } from '@/lib/focusTrap'
 import { mergeClasses } from '@/lib/merge-classes'
-import React, { ReactNode, useCallback, useEffect, useRef } from 'react'
+import React, { ReactNode, useCallback, useEffect, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
 export const MODAL_ROOT_SELECTOR = '[data-abs-modal]'
@@ -29,6 +29,9 @@ export interface ModalProps {
   onClose?: () => void
   className?: string
   style?: React.CSSProperties
+  /** Id of the element that names the dialog. Defaults to the outer content (the title above the panel). */
+  ariaLabelledBy?: string
+  ariaDescribedBy?: string
 }
 
 export default function Modal({
@@ -42,9 +45,12 @@ export default function Modal({
   sideNavigation,
   onClose,
   className,
-  style
+  style,
+  ariaLabelledBy,
+  ariaDescribedBy
 }: ModalProps) {
   const t = useTypeSafeTranslations()
+  const outerContentId = useId()
 
   const wrapperRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
@@ -93,6 +99,29 @@ export default function Modal({
     }
   }, [isOpen])
 
+  // A focused control that gets removed or disabled (a deleted pill, the save button while saving)
+  // drops the focus to the page behind the modal. Take it back so keyboard and screen reader users stay inside.
+  useEffect(() => {
+    if (!isOpen) return
+
+    const restoreFocus = () => {
+      if (getTopmostModalElement() !== wrapperRef.current) return
+      // After the click handlers have updated the modal
+      setTimeout(() => {
+        if (document.activeElement === document.body) contentRef.current?.focus()
+      }, 100)
+    }
+
+    // Not every browser reports the lost focus, so also look after each click.
+    // Capture phase, because the modal content stops clicks from bubbling.
+    document.addEventListener('focusout', restoreFocus)
+    document.addEventListener('click', restoreFocus, { capture: true })
+    return () => {
+      document.removeEventListener('focusout', restoreFocus)
+      document.removeEventListener('click', restoreFocus, { capture: true })
+    }
+  }, [isOpen])
+
   // Close on Escape even when focus is outside the modal (e.g. after blurring a field
   // or using episode prev/next navigation). Only the topmost nested modal should respond.
   useEffect(() => {
@@ -126,6 +155,8 @@ export default function Modal({
       ref={wrapperRef}
       role="dialog"
       aria-modal="true"
+      aria-labelledby={ariaLabelledBy ?? (outerContent ? outerContentId : undefined)}
+      aria-describedby={ariaDescribedBy}
       data-abs-modal
       className={mergeClasses(
         'modal modal-bg safe-px fixed inset-s-0 top-0 flex h-full w-full items-center justify-center overflow-x-hidden pt-[50px] pb-2',
@@ -145,11 +176,17 @@ export default function Modal({
         onClick={clickClose}
         cy-id="modal-close-button"
       >
-        <span className="material-symbols text-xl sm:text-2xl">close</span>
+        <span className="material-symbols text-xl sm:text-2xl" aria-hidden="true">
+          close
+        </span>
       </button>
 
       {/* Outer content slot */}
-      {outerContent}
+      {outerContent && (
+        <div id={outerContentId} className="contents">
+          {outerContent}
+        </div>
+      )}
 
       {/* Focus trap + optional side rails + panel */}
       <div

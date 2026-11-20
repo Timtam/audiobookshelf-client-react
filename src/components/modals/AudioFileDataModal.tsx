@@ -12,7 +12,7 @@ import { secondsToTimestamp } from '@/lib/datefns'
 import { mergeClasses } from '@/lib/merge-classes'
 import { bytesPretty } from '@/lib/string'
 import { AudioFile, FFProbeData } from '@/types/api'
-import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from 'react'
+import { useCallback, useEffect, useId, useMemo, useRef, useState, useTransition } from 'react'
 import IconBtn from '../ui/IconBtn'
 
 interface AudioFileDataModalProps {
@@ -37,6 +37,7 @@ export default function AudioFileDataModal({ isOpen, audioFile, libraryItemId, o
   const [ffprobeData, setFfprobeData] = useState<FFProbeData | null>(null)
   const [hasCopied, setHasCopied] = useState(false)
   const copyButtonRef = useRef<HTMLButtonElement>(null)
+  const titleId = useId()
 
   // Reset state when modal opens/closes
   useEffect(() => {
@@ -103,13 +104,13 @@ export default function AudioFileDataModal({ isOpen, audioFile, libraryItemId, o
   if (!audioFile) return null
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} ariaLabelledBy={titleId}>
       <div
         className={mergeClasses('w-full overflow-x-hidden p-4 sm:p-6', ffprobeData ? 'flex flex-col overflow-hidden' : 'overflow-y-auto')}
         style={ffprobeData ? { height: '80vh' } : { maxHeight: '80vh' }}
       >
         <div className={mergeClasses('flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-0', ffprobeData && 'shrink-0')}>
-          <h2 className="text-foreground truncate text-base" title={metadata?.filename}>
+          <h2 id={titleId} className="text-foreground truncate text-base" title={metadata?.filename}>
             {metadata?.filename}
           </h2>
           {ffprobeData ? (

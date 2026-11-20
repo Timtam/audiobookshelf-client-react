@@ -128,8 +128,8 @@ export default function ConfirmDialog({
   const dialogTitle = title || 'Confirm'
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} persistent={processing} className="w-sm">
-      <div ref={dialogContentRef} className={mergeClasses('px-4 py-6 text-sm', className)} aria-labelledby={titleId} aria-describedby={messageId} tabIndex={-1}>
+    <Modal isOpen={isOpen} onClose={handleClose} persistent={processing} className="w-sm" ariaLabelledBy={titleId} ariaDescribedBy={messageId}>
+      <div ref={dialogContentRef} className={mergeClasses('px-4 py-6 text-sm', className)} tabIndex={-1}>
         <h2 id={titleId} className="sr-only">
           {dialogTitle}
         </h2>
