@@ -431,7 +431,9 @@ export default function Match({
               className="mt-4 flex flex-1 flex-col gap-2 overflow-x-clip px-1 md:mx-0 md:min-h-0 md:overflow-y-auto md:px-0"
               style={{ paddingRight: hasScrollbar ? '1rem' : '0' }}
               onKeyDown={handleContainerKeyDown}
-              role="listbox"
+              // A list and not a listbox: a screen reader treats a listbox as one control, shows only one
+              // result of it at a time and repeats the name of the list on every line of that result
+              role="list"
               aria-label={t('AriaLabelSearchResults')}
             >
               {searchResults.map((result, index) => (
