@@ -131,7 +131,10 @@ export default function EpisodeTableHeaderActions({
 
   return (
     <Btn size="small" onClick={onFindEpisodes} loading={isFetchingRSSFeed}>
-      {t('LabelFindEpisodes')}&nbsp;<span className="material-symbols">podcasts</span>
+      {t('LabelFindEpisodes')}&nbsp;
+      <span className="material-symbols" aria-hidden="true">
+        podcasts
+      </span>
     </Btn>
   )
 }

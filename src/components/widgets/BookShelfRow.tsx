@@ -83,7 +83,7 @@ export default function BookShelfRow({ title, children, className }: BookShelfRo
           onClick={scrollLeft}
           aria-label={t('ButtonScrollLeft')}
         >
-          <span className="material-symbols text-white" style={{ fontSize: '3.75em' }}>
+          <span className="material-symbols text-white" aria-hidden="true" style={{ fontSize: '3.75em' }}>
             chevron_left
           </span>
         </button>
@@ -95,7 +95,7 @@ export default function BookShelfRow({ title, children, className }: BookShelfRo
           onClick={scrollRight}
           aria-label={t('ButtonScrollRight')}
         >
-          <span className="material-symbols text-white" style={{ fontSize: '3.75em' }}>
+          <span className="material-symbols text-white" aria-hidden="true" style={{ fontSize: '3.75em' }}>
             chevron_right
           </span>
         </button>

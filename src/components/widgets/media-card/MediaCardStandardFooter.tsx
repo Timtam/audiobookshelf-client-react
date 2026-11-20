@@ -31,7 +31,7 @@ function MediaCardStandardFooter({ displayTitle, fontSize = 0.9, width, classNam
       style={style}
     >
       <div className="shinyBlack flex h-full w-full items-center justify-center rounded-xs border" style={{ padding: '0em 0.5em' }}>
-        <p cy-id="standardBottomDisplayTitle" className="truncate" style={{ fontSize: `${fontSize}em` }}>
+        <p cy-id="standardBottomDisplayTitle" className="truncate" style={{ fontSize: `${fontSize}em` }} role="heading" aria-level={3}>
           {displayTitle}
         </p>
       </div>

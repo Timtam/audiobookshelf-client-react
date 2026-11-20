@@ -45,7 +45,9 @@ export default function LogoutBtn({ size = 'medium', allDevices = false, loading
       size={size}
       className={mergeClasses('shrink-0 items-center justify-between gap-2 whitespace-nowrap', size === 'small' ? 'ps-4' : 'ps-6', className)}
     >
-      <span className="material-symbols text-lg">{allDevices ? 'devices' : 'logout'}</span>
+      <span className="material-symbols text-lg" aria-hidden="true">
+        {allDevices ? 'devices' : 'logout'}
+      </span>
       {allDevices ? t('ButtonLogoutAllDevices') : t('LabelLogout')}
     </Btn>
   )

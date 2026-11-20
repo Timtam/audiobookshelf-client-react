@@ -281,7 +281,9 @@ export default function BatchLibraryItemMapDetailsPanel({
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
         >
-          <span className="material-symbols shrink-0 text-2xl">{open ? 'expand_less' : 'expand_more'}</span>
+          <span className="material-symbols shrink-0 text-2xl" aria-hidden="true">
+            {open ? 'expand_less' : 'expand_more'}
+          </span>
           <p className="ms-4 min-w-0 text-lg">{t('HeaderMapDetails')}</p>
         </button>
         <div className="flex w-full max-w-xs shrink-0 sm:w-64 sm:max-w-none">

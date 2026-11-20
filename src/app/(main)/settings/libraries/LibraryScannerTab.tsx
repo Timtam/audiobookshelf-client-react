@@ -107,6 +107,7 @@ export default function LibraryScannerTab({ settings, onSettingsChange }: Librar
           source.include ? DRAG_HANDLE_GRAB_CURSOR : 'cursor-default',
           source.include ? DRAG_HANDLE_COARSE_POINTER_MIN_TOUCH : 'pointer-events-none'
         )}
+        aria-label={t('TooltipCollectionDragHandle')}
         {...dragHandle.attributes}
         {...(source.include ? dragHandle.listeners : {})}
       >
@@ -115,6 +116,7 @@ export default function LibraryScannerTab({ settings, onSettingsChange }: Librar
             'material-symbols text-xl leading-none',
             source.include ? 'text-foreground-subdued hover:text-foreground' : 'text-foreground-subdued/40'
           )}
+          aria-hidden="true"
         >
           drag_handle
         </span>

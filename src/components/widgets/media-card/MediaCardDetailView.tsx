@@ -54,7 +54,7 @@ export default function MediaCardDetailView({
           </div>
         ) : (
           <div className="flex min-w-0 items-center">
-            <div className="min-w-0 flex-1">
+            <div className="min-w-0 flex-1" role="heading" aria-level={3}>
               <TruncatingTooltipText lazy text={displayTitle} position="bottom" />
             </div>
             {isExplicit && <ExplicitIndicator className="ms-1 shrink-0" />}

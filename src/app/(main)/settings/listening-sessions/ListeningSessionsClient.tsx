@@ -30,7 +30,9 @@ export default function ListeningSessionsClient({ users, sessionsResponse, openS
             href={`/settings/users/${userFilter}`}
             className="text-foreground-muted hover:text-foreground hidden w-fit items-center gap-2 px-2 sm:px-0 md:flex"
           >
-            <span className="material-symbols text-2xl">arrow_back</span>
+            <span className="material-symbols text-2xl" aria-hidden="true">
+              arrow_back
+            </span>
             <span>{t('LabelBackToUser')}</span>
           </Link>
 

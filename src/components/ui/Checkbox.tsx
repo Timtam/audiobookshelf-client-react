@@ -2,7 +2,7 @@
 
 import { useShiftClickTextSelectionGuard } from '@/hooks/useShiftClickTextSelectionGuard'
 import { mergeClasses } from '@/lib/merge-classes'
-import React, { useId, useRef } from 'react'
+import React, { useEffect, useId, useRef } from 'react'
 import InputWrapper from './InputWrapper'
 
 interface CheckboxProps {
@@ -32,6 +32,11 @@ export default function Checkbox({
 }: CheckboxProps) {
   const inputRef = useRef<HTMLInputElement>(null)
   const shiftKeyRef = useRef(false)
+
+  // Screen readers only get the partial state from the DOM property, there is no attribute for it
+  useEffect(() => {
+    if (inputRef.current) inputRef.current.indeterminate = partial
+  }, [partial])
   const { onPointerDown: guardPointerDown } = useShiftClickTextSelectionGuard({ enabled: true })
 
   const checkboxId = useId()
@@ -80,7 +85,9 @@ export default function Checkbox({
             className={mergeClasses('flex h-full w-full items-center justify-center rounded-sm', disabled ? 'bg-checkbox-bg-disabled' : '')}
           >
             {partial ? (
-              <span className="material-symbols text-foreground-subdued text-base leading-none">remove</span>
+              <span className="material-symbols text-foreground-subdued text-base leading-none" aria-hidden="true">
+                remove
+              </span>
             ) : value ? (
               <svg className={svgClass} viewBox="0 0 20 20">
                 <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />

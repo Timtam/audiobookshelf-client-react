@@ -494,8 +494,11 @@ export default function LibraryFilterSelect({ entityType = 'items', user }: Libr
             handleClear()
           }}
           title={t('ButtonClearFilter')}
+          aria-label={t('ButtonClearFilter')}
         >
-          <span className="material-symbols text-base">close</span>
+          <span className="material-symbols text-base" aria-hidden="true">
+            close
+          </span>
         </button>
       )}
     </div>

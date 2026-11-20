@@ -123,7 +123,11 @@ export default function CollectionClient({ collection }: CollectionClientProps) 
             <div className="flex shrink-0 flex-wrap items-center gap-1 px-2 md:px-0">
               {showPlayButton && (
                 <Btn color="bg-success text-success-foreground" size="small" className="mr-1 h-9" disabled={streaming} onClick={handlePlayAll}>
-                  {!streaming && <span className="material-symbols fill -ml-2 pr-1 text-2xl">play_arrow</span>}
+                  {!streaming && (
+                    <span className="material-symbols fill -ml-2 pr-1 text-2xl" aria-hidden="true">
+                      play_arrow
+                    </span>
+                  )}
                   {streaming ? t('ButtonPlaying') : t('ButtonPlayAll')}
                 </Btn>
               )}

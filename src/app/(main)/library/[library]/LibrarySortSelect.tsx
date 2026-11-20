@@ -170,7 +170,11 @@ export default function LibrarySortSelect({ entityType = 'items', libraryMediaTy
       const selectedItem = items.find((i) => i.value === currentSortBy)
       if (selectedItem) {
         selectedItem.rightIcon = (
-          <span className="material-symbols text-xl text-yellow-400" aria-label={currentSortDesc ? t('LabelSortDescending') : t('LabelSortAscending')}>
+          <span
+            className="material-symbols text-xl text-yellow-400"
+            role="img"
+            aria-label={currentSortDesc ? t('LabelSortDescending') : t('LabelSortAscending')}
+          >
             {currentSortDesc ? 'expand_more' : 'expand_less'}
           </span>
         )
@@ -182,7 +186,7 @@ export default function LibrarySortSelect({ entityType = 'items', libraryMediaTy
 
   const rightIcon = useMemo(() => {
     return (
-      <span className="material-symbols text-lg text-yellow-400" aria-label={currentSortDesc ? t('LabelSortDescending') : t('LabelSortAscending')}>
+      <span className="material-symbols text-lg text-yellow-400" role="img" aria-label={currentSortDesc ? t('LabelSortDescending') : t('LabelSortAscending')}>
         {currentSortDesc ? 'expand_more' : 'expand_less'}
       </span>
     )

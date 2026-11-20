@@ -132,7 +132,9 @@ export default function EbookFilesTable({ libraryItem, keepOpen = false, expande
               {isPrimary && (
                 <span className="ms-1 inline-block">
                   <Tooltip text={t('LabelPrimaryEbook')} position="top">
-                    <span className="material-symbols text-success align-text-bottom text-base">check_circle</span>
+                    <span className="material-symbols text-success align-text-bottom text-base" role="img" aria-label={t('LabelPrimaryEbook')}>
+                      check_circle
+                    </span>
                   </Tooltip>
                 </span>
               )}

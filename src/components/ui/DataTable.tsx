@@ -355,11 +355,12 @@ export default function DataTable<T>({
           getResponsiveHiddenClass(column.hiddenBelow)
         )}
         scope="col"
+        aria-sort={isActiveSort ? (sorting.sortDesc ? 'descending' : 'ascending') : undefined}
         onClick={() => sorting.onSortChange(sortKey, isActiveSort ? !sorting.sortDesc : true)}
       >
         <div className="inline-flex items-center">
           {column.label}
-          <span className={mergeClasses('material-symbols pl-px text-base', isActiveSort ? '' : 'opacity-0 group-hover:opacity-30')}>
+          <span className={mergeClasses('material-symbols pl-px text-base', isActiveSort ? '' : 'opacity-0 group-hover:opacity-30')} aria-hidden="true">
             {sorting.sortDesc ? 'arrow_drop_down' : 'arrow_drop_up'}
           </span>
         </div>

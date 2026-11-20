@@ -17,6 +17,7 @@ export const useLinkModal = (editor: Editor) => {
 
   const textInputRef = useRef<HTMLInputElement | null>(null)
   const urlInputRef = useRef<HTMLInputElement | null>(null)
+  const wasOpenRef = useRef(false)
 
   // URL validation function
   const validateUrl = useCallback((urlString: string): boolean => {
@@ -70,7 +71,10 @@ export const useLinkModal = (editor: Editor) => {
 
   // Focus management - refocus editor when modal closes
   useEffect(() => {
-    if (!isOpen) {
+    // Only after the modal was open. When the editor first appears it must not pull the focus away.
+    if (isOpen) wasOpenRef.current = true
+    if (!isOpen && wasOpenRef.current) {
+      wasOpenRef.current = false
       // Focus on the next frame so it's after the DOM updates/unmount
       requestAnimationFrame(() => {
         try {

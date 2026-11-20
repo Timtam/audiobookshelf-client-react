@@ -1,6 +1,6 @@
 'use client'
 
-import React, { memo } from 'react'
+import React, { memo, useId } from 'react'
 
 import Modal from '@/components/modals/Modal'
 import Btn from '@/components/ui/Btn'
@@ -46,11 +46,14 @@ export const LinkModal = memo(
     isValidUrl
   }: LinkModalProps) => {
     const t = useTypeSafeTranslations()
+    const titleId = useId()
 
     return (
-      <Modal isOpen={isOpen} onClose={closeModal} className="w-[400px]">
+      <Modal isOpen={isOpen} onClose={closeModal} className="w-[400px]" ariaLabelledBy={titleId}>
         <div className="p-6">
-          <h3 className="mb-4 text-lg font-semibold">{t('LabelTextEditorInsertLink')}</h3>
+          <h3 id={titleId} className="mb-4 text-lg font-semibold">
+            {t('LabelTextEditorInsertLink')}
+          </h3>
 
           <div className="space-y-4">
             <div>

@@ -30,7 +30,9 @@ export default function SettingsNavPage() {
             <Link key={item.href} href={item.href} className="bg-primary/40 hover:bg-primary/60 text-foreground-muted hover:text-foreground rounded-md p-4">
               <div className="flex items-center justify-between">
                 <span>{item.label}</span>
-                <span className="material-symbols text-xl">arrow_forward</span>
+                <span className="material-symbols text-xl" aria-hidden="true">
+                  arrow_forward
+                </span>
               </div>
             </Link>
           ))}

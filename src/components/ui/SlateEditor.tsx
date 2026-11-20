@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { createEditor, Descendant, Editor, Element, Node, Path, Point, Range, Text, Transforms } from 'slate'
 import { HistoryEditor, withHistory } from 'slate-history'
 import { ReactEditor, Slate, withReact } from 'slate-react'
@@ -148,6 +148,7 @@ interface SlateEditorProps {
 
 const SlateEditor = memo(({ label, srcContent = '', onUpdate, placeholder, disabled = false, readOnly = false, className }: SlateEditorProps) => {
   const editor = useMemo(() => withLinks(withHistory(withReact(createEditor()))), [])
+  const labelId = useId()
   const [isClient, setIsClient] = useState(false)
   /** True while source HTML is being applied. Slate flushes onChange in a microtask after the batch. */
   const applyingSourceRef = useRef(false)
@@ -221,55 +222,6 @@ const SlateEditor = memo(({ label, srcContent = '', onUpdate, placeholder, disab
       }
     }
   }, [isClient, srcContent, replaceFromSource])
-
-  // Refocus editor whenever the modal closes (this will be handled by the context now)
-  useEffect(() => {
-    // Only run after client-side hydration is complete
-    if (!isClient || readOnly || disabled) {
-      return
-    }
-
-    // Focus on the next frame so it's after the DOM updates/unmount
-    requestAnimationFrame(() => {
-      try {
-        // Safety check: ensure editor has valid content before focusing
-        if (editor.children.length > 0) {
-          // Check if the editor is actually attached to the DOM
-          try {
-            const editorElement = ReactEditor.toDOMNode(editor, editor)
-            if (!editorElement || !document.body.contains(editorElement)) {
-              return
-            }
-          } catch {
-            // Editor not yet attached to DOM
-            return
-          }
-
-          // Check if there's at least one text node and it can be resolved to DOM
-          const textNodeEntry = Editor.nodes(editor, {
-            at: [],
-            match: (n) => Text.isText(n)
-          }).next().value
-
-          if (textNodeEntry) {
-            // Verify that the text node can actually be resolved to a DOM node
-            try {
-              const [textNode] = textNodeEntry
-              ReactEditor.toDOMNode(editor, textNode)
-              // If we got here, the text node is in the DOM, so we can focus
-              ReactEditor.focus(editor)
-            } catch {
-              // Text node not yet in DOM, skip focus
-              return
-            }
-          }
-        }
-      } catch (error) {
-        // Silently handle focus errors during hot reload or invalid states
-        console.warn('SlateEditor: Could not focus editor:', error)
-      }
-    })
-  }, [isClient, readOnly, disabled, editor])
 
   // Helper to normalize any string (html or plain) to the editor's canonical HTML output
   const normalizeToHtml = useCallback((content: string) => {
@@ -362,14 +314,14 @@ const SlateEditor = memo(({ label, srcContent = '', onUpdate, placeholder, disab
   return (
     <div className={containerClass} cy-id="slate-editor">
       {label && (
-        <Label disabled={disabled} onClick={handleLabelClick}>
+        <Label id={labelId} disabled={disabled} onClick={handleLabelClick}>
           {label}
         </Label>
       )}
       <LinkModalProvider editor={editor}>
         <Slate editor={editor} initialValue={parsedContent} onChange={handleChange}>
           {!readOnly && !disabled && <Toolbar />}
-          <Editable editor={editor} readOnly={readOnly} placeholder={placeholder} disabled={disabled} />
+          <Editable editor={editor} readOnly={readOnly} placeholder={placeholder} disabled={disabled} labelId={label ? labelId : undefined} />
         </Slate>
 
         <LinkModalContainer />

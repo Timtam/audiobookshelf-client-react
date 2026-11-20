@@ -39,7 +39,11 @@ export default function EpisodesFilterSelect({ value, onChange, disabled, classN
         className="text-xs [&_button]:text-xs"
         displayText={currentLabel}
         disabled={disabled}
-        rightIcon={<span className="material-symbols text-xl">expand_more</span>}
+        rightIcon={
+          <span className="material-symbols text-xl" aria-hidden="true">
+            expand_more
+          </span>
+        }
       />
     </div>
   )

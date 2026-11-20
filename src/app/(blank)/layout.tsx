@@ -19,7 +19,7 @@ export default function BlankLayout({
         <Image src={withBasePath('/images/icon.svg')} alt="" width={40} height={40} className="me-2 h-8 w-8 min-w-8 sm:me-4 sm:h-10 sm:w-10 sm:min-w-10" />
         <p className="hidden text-xl lg:block">audiobookshelf</p>
       </div>
-      <div className="h-dvh w-full overflow-x-hidden overflow-y-auto py-16">{children}</div>
+      <main className="h-dvh w-full overflow-x-hidden overflow-y-auto py-16">{children}</main>
     </div>
   )
 }

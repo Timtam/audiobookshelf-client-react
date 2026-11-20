@@ -44,7 +44,9 @@ function MetadataFilterCard({ name, count, filterKey, icon }: MetadataFilterCard
         style={{ width: `${coverWidth}px`, height: `${coverHeight}px`, fontSize: `${sizeMultiplier}rem` }}
       >
         <div className="pointer-events-none absolute inset-0 flex h-full w-full items-center justify-center">
-          <span className="material-symbols text-[8em] text-white opacity-40">{icon}</span>
+          <span className="material-symbols text-[8em] text-white opacity-40" aria-hidden="true">
+            {icon}
+          </span>
         </div>
 
         <div className="absolute inset-s-0 bottom-0 z-10 w-full bg-black/75 px-2 py-1">

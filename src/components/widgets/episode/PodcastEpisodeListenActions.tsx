@@ -45,6 +45,7 @@ export default function PodcastEpisodeListenActions({
             <IconBtn
               borderless
               className={mergeClasses(EPISODE_ROW_ACTION_BTN_CLASS, isQueued && 'text-success hover:not-disabled:text-success')}
+              ariaLabel={isQueued ? t('MessageRemoveFromPlayerQueue') : t('MessageAddToPlayerQueue')}
               onClick={onQueueToggle}
             >
               {isQueued ? 'playlist_add_check' : 'playlist_play'}

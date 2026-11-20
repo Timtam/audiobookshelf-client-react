@@ -92,6 +92,7 @@ export default function AuthorClient({ author: authorProp }: AuthorClientProps) 
             <IconBtn
               borderless
               size="small"
+              ariaLabel={t('ButtonEdit')}
               // todo add this affect to icon btn?
               iconClass="hover:text-warning hover:scale-120 transition-colors transition-transform duration-100"
               onClick={() => setIsEditModalOpen(true)}

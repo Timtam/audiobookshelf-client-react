@@ -21,8 +21,16 @@ export default function MoreInfoIcon({ moreInfoUrl, size = 'lg', position = 'rig
 
   return (
     <TooltipCore text={t('LabelClickForMoreInfo')} position={position} closeOnClick className="leading-0">
-      <Link href={moreInfoUrl} target="_blank" rel="noreferrer" className="text-foreground-muted hover:text-foreground inline-flex leading-0">
-        <span className={mergeClasses('material-symbols', iconClassMap[size])}>help_outline</span>
+      <Link
+        href={moreInfoUrl}
+        target="_blank"
+        rel="noreferrer"
+        className="text-foreground-muted hover:text-foreground inline-flex leading-0"
+        aria-label={t('LabelMoreInfo')}
+      >
+        <span className={mergeClasses('material-symbols', iconClassMap[size])} aria-hidden="true">
+          help_outline
+        </span>
       </Link>
     </TooltipCore>
   )

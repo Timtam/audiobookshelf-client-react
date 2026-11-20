@@ -49,9 +49,11 @@ interface EditableProps {
   disabled: boolean
   readOnly: boolean
   placeholder?: string
+  /** Id of the label that names the editor */
+  labelId?: string
 }
 
-export const Editable = memo(({ editor, disabled, readOnly, placeholder }: EditableProps) => {
+export const Editable = memo(({ editor, disabled, readOnly, placeholder, labelId }: EditableProps) => {
   const { openModal } = useLinkModalContext()
   const editableRef = useRef<HTMLDivElement>(null)
   const [isMounted, setIsMounted] = useState(false)
@@ -242,6 +244,7 @@ export const Editable = memo(({ editor, disabled, readOnly, placeholder }: Edita
         disableDefaultStyles={true}
         role="textbox"
         aria-multiline="true"
+        aria-labelledby={labelId}
         aria-disabled={disabled}
         inert={disabled ? true : undefined}
         cy-id="slate-editor-editable"

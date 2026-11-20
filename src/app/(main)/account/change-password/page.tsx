@@ -16,7 +16,9 @@ export default async function ChangePasswordPage() {
     <div className="mx-auto w-full max-w-xl p-8">
       <div className="mb-2 flex items-center gap-2">
         <Link aria-label={t('ButtonBack')} href="/account" className="text-foreground-muted hover:text-foreground">
-          <span className="material-symbols text-xl">arrow_back</span>
+          <span className="material-symbols text-xl" aria-hidden="true">
+            arrow_back
+          </span>
         </Link>
 
         <h1 className="text-xl">{t('HeaderChangePassword')}</h1>

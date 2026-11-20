@@ -15,7 +15,9 @@ interface ToolsInfoNotesProps {
 function InfoNote({ children }: { children: ReactNode }) {
   return (
     <div className="mb-2 flex items-start">
-      <span className="material-symbols text-warning pt-1 text-base">star</span>
+      <span className="material-symbols text-warning pt-1 text-base" aria-hidden="true">
+        star
+      </span>
       <p className="text-foreground-muted ms-2">{children}</p>
     </div>
   )

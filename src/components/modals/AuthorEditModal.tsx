@@ -135,6 +135,7 @@ export default function AuthorEditModal({ isOpen, user, author: authorProp, onCl
                       <IconBtn
                         borderless={true}
                         className="text-error hover:not-disabled:text-error absolute top-0 right-0 transform cursor-pointer transition-transform hover:scale-125"
+                        ariaLabel={t('ButtonRemove')}
                         onClick={handleRemoveImageWrapper}
                       >
                         delete

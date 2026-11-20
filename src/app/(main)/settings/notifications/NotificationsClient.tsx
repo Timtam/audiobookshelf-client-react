@@ -156,7 +156,9 @@ export default function NotificationsClient({ initialSettings, notificationData 
           <h2 className="text-lg font-semibold">{t('HeaderNotifications')}</h2>
           <Btn size="small" className="flex items-center gap-2" onClick={() => openEditModal(null)}>
             {t('ButtonCreate')}
-            <span className="material-symbols text-lg">add</span>
+            <span className="material-symbols text-lg" aria-hidden="true">
+              add
+            </span>
           </Btn>
         </div>
 

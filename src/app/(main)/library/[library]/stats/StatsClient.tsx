@@ -21,7 +21,9 @@ interface StatCardProps {
 const StatCard: React.FC<StatCardProps> = ({ iconName, value, label, iconStyle = 'py-1' }) => {
   return (
     <div className="flex p-2">
-      <span className={`material-symbols text-5xl ${iconStyle}`}>{iconName}</span>
+      <span className={`material-symbols text-5xl ${iconStyle}`} aria-hidden="true">
+        {iconName}
+      </span>
       <div className="px-1">
         <p className="text-4.5xl leading-none font-bold">{value}</p>
         <p className="text-foreground-subdued text-xs md:text-sm">{label}</p>

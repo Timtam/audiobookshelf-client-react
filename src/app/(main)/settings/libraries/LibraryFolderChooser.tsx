@@ -177,7 +177,12 @@ export default function LibraryFolderChooser({ paths, onSelect, onBack }: Librar
     <div className="bg-bg absolute inset-0 z-10 flex flex-col px-4 py-4">
       {/* Header */}
       <div className="mb-2 flex items-center py-1">
-        <button type="button" onClick={onBack} className="material-symbols hover:text-foreground-muted cursor-pointer text-3xl transition-colors">
+        <button
+          type="button"
+          onClick={onBack}
+          className="material-symbols hover:text-foreground-muted cursor-pointer text-3xl transition-colors"
+          aria-label={t('ButtonBack')}
+        >
           arrow_back
         </button>
         <p className="px-4 text-xl">{t('HeaderChooseAFolder')}</p>
@@ -196,8 +201,13 @@ export default function LibraryFolderChooser({ paths, onSelect, onBack }: Librar
           {/* Left column: current directories */}
           <div className="border-bg h-full w-1/2 overflow-y-auto border-r">
             {level > 0 && (
-              <button type="button" className="hover:bg-bg-hover flex w-full cursor-pointer items-center p-1 text-start" onClick={goBack}>
-                <span className="material-symbols fill text-yellow-200" style={{ fontSize: '1.2rem' }}>
+              <button
+                type="button"
+                className="hover:bg-bg-hover flex w-full cursor-pointer items-center p-1 text-start"
+                aria-label={t('ButtonParentFolder')}
+                onClick={goBack}
+              >
+                <span className="material-symbols fill text-yellow-200" aria-hidden="true" style={{ fontSize: '1.2rem' }}>
                   folder
                 </span>
                 <p className="px-2 font-mono text-base">..</p>
@@ -214,13 +224,14 @@ export default function LibraryFolderChooser({ paths, onSelect, onBack }: Librar
                 )}
                 onClick={() => selectDir(dir)}
                 disabled={dir.isUsed}
+                aria-current={dir.isSelected || undefined}
               >
-                <span className="material-symbols fill shrink-0 text-yellow-200" style={{ fontSize: '1.2rem' }}>
+                <span className="material-symbols fill shrink-0 text-yellow-200" aria-hidden="true" style={{ fontSize: '1.2rem' }}>
                   folder
                 </span>
                 <p className="truncate px-2 font-mono text-base">{dir.dirname}</p>
                 {dir.isSelected && (
-                  <span className="material-symbols shrink-0" style={{ fontSize: '1.1rem' }}>
+                  <span className="material-symbols shrink-0" aria-hidden="true" style={{ fontSize: '1.1rem' }}>
                     arrow_right
                   </span>
                 )}
@@ -242,7 +253,7 @@ export default function LibraryFolderChooser({ paths, onSelect, onBack }: Librar
                 onClick={() => selectSubDir(dir)}
                 disabled={dir.isUsed}
               >
-                <span className="material-symbols fill shrink-0 text-yellow-200" style={{ fontSize: '1.2rem' }}>
+                <span className="material-symbols fill shrink-0 text-yellow-200" aria-hidden="true" style={{ fontSize: '1.2rem' }}>
                   folder
                 </span>
                 <p className="truncate px-2 font-mono text-base">{dir.dirname}</p>

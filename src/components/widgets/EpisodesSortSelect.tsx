@@ -33,7 +33,7 @@ export default function EpisodesSortSelect({ sortBy, sortDesc, onChange, disable
         return {
           ...item,
           rightIcon: (
-            <span className="material-symbols text-xl text-yellow-400" aria-label={sortDesc ? t('LabelSortDescending') : t('LabelSortAscending')}>
+            <span className="material-symbols text-xl text-yellow-400" role="img" aria-label={sortDesc ? t('LabelSortDescending') : t('LabelSortAscending')}>
               {sortDesc ? 'expand_more' : 'expand_less'}
             </span>
           )
@@ -56,7 +56,7 @@ export default function EpisodesSortSelect({ sortBy, sortDesc, onChange, disable
   }
 
   const rightIcon = (
-    <span className="material-symbols text-xl text-yellow-400" aria-label={sortDesc ? t('LabelSortDescending') : t('LabelSortAscending')}>
+    <span className="material-symbols text-xl text-yellow-400" role="img" aria-label={sortDesc ? t('LabelSortDescending') : t('LabelSortAscending')}>
       {sortDesc ? 'expand_more' : 'expand_less'}
     </span>
   )

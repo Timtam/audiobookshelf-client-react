@@ -122,6 +122,7 @@ export function SectionedModalBody({
             <button
               key={item.id}
               type="button"
+              aria-current={isActive || undefined}
               onClick={() => onSectionChange(item.id)}
               className={mergeClasses(
                 'text-foreground hover:bg-nav-item-hover border-primary/30 relative flex h-20 w-full flex-col items-center justify-center border-b transition-colors',

@@ -151,7 +151,9 @@ export default function OpenIdAuthSettings({ settings, onChange, disabled = fals
             loading={isAutoPopulating}
             onClick={handleAutoPopulate}
           >
-            <span className="material-symbols text-base">auto_fix_high</span>
+            <span className="material-symbols text-base" aria-hidden="true">
+              auto_fix_high
+            </span>
             <span className="pl-1 break-keep whitespace-nowrap">{t('ButtonAutoPopulate')}</span>
           </Btn>
         </div>

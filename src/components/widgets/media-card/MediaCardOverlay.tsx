@@ -285,7 +285,7 @@ export default function MediaCardOverlay({
               className={mergeClasses('bg-error flex items-center justify-end rounded-r-full shadow-md', 'border-r border-b border-red-300')}
               style={errorBadgeStyle}
             >
-              <span className="material-symbols pr-1 text-red-100" style={errorIconStyle}>
+              <span className="material-symbols pr-1 text-red-100" role="img" aria-label={errorText} style={errorIconStyle}>
                 priority_high
               </span>
             </div>

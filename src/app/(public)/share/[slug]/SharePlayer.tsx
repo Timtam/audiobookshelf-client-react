@@ -462,7 +462,9 @@ export default function SharePlayer({ slug, startTime: startTimeParam }: SharePl
     return (
       <div className="text-foreground page-bg-gradient bleed-mx flex h-dvh items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <span className="material-symbols text-foreground-subdued text-5xl">error</span>
+          <span className="material-symbols text-foreground-subdued text-5xl" aria-hidden="true">
+            error
+          </span>
           <p className="text-foreground-muted text-xl">{fetchError || 'Failed to load shared item'}</p>
         </div>
       </div>
@@ -527,14 +529,20 @@ export default function SharePlayer({ slug, startTime: startTimeParam }: SharePl
             <div className="flex items-center justify-center gap-3 sm:gap-4">
               {/* Volume */}
               <Tooltip text="Volume" position="top">
-                <IconBtn borderless size="custom" className="w-9 text-2xl" onClick={toggleMute}>
+                <IconBtn
+                  borderless
+                  size="custom"
+                  className="w-9 text-2xl"
+                  ariaLabel={settings.volume === 0 ? t('LabelUnmute') : t('LabelMute')}
+                  onClick={toggleMute}
+                >
                   {volumeIcon}
                 </IconBtn>
               </Tooltip>
 
               {/* Jump backward */}
               <Tooltip text={`Jump back ${settings.jumpBackwardAmount}s`} position="top">
-                <IconBtn borderless size="custom" className="w-10 text-3xl" onClick={jumpBackward}>
+                <IconBtn borderless size="custom" className="w-10 text-3xl" ariaLabel={t('ButtonJumpBackward')} onClick={jumpBackward}>
                   replay
                 </IconBtn>
               </Tooltip>
@@ -546,6 +554,7 @@ export default function SharePlayer({ slug, startTime: startTimeParam }: SharePl
                 loading={playerState === PlayerState.LOADING}
                 outlined={false}
                 className="player-play-btn bg-accent text-primary hover:text-primary hover:not-disabled:text-primary h-12 w-12 rounded-full text-3xl"
+                ariaLabel={isPlaying ? t('ButtonPause') : t('ButtonPlay')}
                 onClick={playPause}
               >
                 {isPlaying ? 'pause' : 'play_arrow'}
@@ -553,7 +562,7 @@ export default function SharePlayer({ slug, startTime: startTimeParam }: SharePl
 
               {/* Jump forward */}
               <Tooltip text={`Jump forward ${settings.jumpForwardAmount}s`} position="top">
-                <IconBtn borderless size="custom" className="w-10 text-3xl" onClick={jumpForward}>
+                <IconBtn borderless size="custom" className="w-10 text-3xl" ariaLabel={t('ButtonJumpForward')} onClick={jumpForward}>
                   forward_media
                 </IconBtn>
               </Tooltip>
@@ -562,6 +571,7 @@ export default function SharePlayer({ slug, startTime: startTimeParam }: SharePl
               <Tooltip text="Playback speed" position="top">
                 <button
                   type="button"
+                  aria-label={t('AriaLabelPlaybackRateWithValue', { 0: settings.playbackRate })}
                   onClick={() => {
                     const rates = [0.5, 0.75, 1, 1.25, 1.5, 2]
                     const currentIdx = rates.indexOf(settings.playbackRate)
@@ -585,7 +595,9 @@ export default function SharePlayer({ slug, startTime: startTimeParam }: SharePl
                   className="text-foreground-muted hover:text-foreground cursor-pointer transition-colors"
                   onClick={downloadShareItem}
                 >
-                  <span className="material-symbols text-2xl sm:text-3xl">download</span>
+                  <span className="material-symbols text-2xl sm:text-3xl" aria-hidden="true">
+                    download
+                  </span>
                 </button>
               </Tooltip>
             </div>

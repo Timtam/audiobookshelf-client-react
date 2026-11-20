@@ -39,7 +39,9 @@ export default function AudioTracksProgressTable({ tracks, audioFilesEncoding, a
             <div className="w-24 min-w-24">
               <div className="flex justify-center">
                 {audioFilesFinished[file.ino] ? (
-                  <span className="material-symbols text-success text-xl leading-none">check_circle</span>
+                  <span className="material-symbols text-success text-xl leading-none" role="img" aria-label={t('LabelFinished')}>
+                    check_circle
+                  </span>
                 ) : audioFilesEncoding[file.ino] ? (
                   <span className="text-success font-mono leading-none">{audioFilesEncoding[file.ino]}</span>
                 ) : null}

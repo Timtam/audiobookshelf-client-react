@@ -82,10 +82,13 @@ export default function LibrariesListRow({ item, handleDeleteLibrary, handleEdit
       <div
         ref={sortableDragHandleProps?.setActivatorNodeRef}
         className={mergeClasses('drag-handle flex shrink-0 items-center justify-center', DRAG_HANDLE_GRAB_CURSOR, DRAG_HANDLE_COARSE_POINTER_MIN_TOUCH)}
+        aria-label={t('TooltipCollectionDragHandle')}
         {...sortableDragHandleProps?.attributes}
         {...sortableDragHandleProps?.listeners}
       >
-        <span className="material-symbols text-foreground/50 hover:text-foreground text-xl leading-none">drag_handle</span>
+        <span className="material-symbols text-foreground/50 hover:text-foreground text-xl leading-none" aria-hidden="true">
+          drag_handle
+        </span>
       </div>
       {isLibraryTaskRunning ? <LoadingSpinner /> : <LibraryIcon icon={item.icon} />}
       <Link className="text-foreground link-underline py-2" href={`/library/${item.id}`}>
