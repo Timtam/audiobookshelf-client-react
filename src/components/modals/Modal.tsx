@@ -5,7 +5,7 @@ import { ModalProvider } from '@/contexts/ModalContext'
 import { useClickOutside } from '@/hooks/useClickOutside'
 import { getTopmostModalElement, useModalHistory } from '@/hooks/useModalHistory'
 import { useTypeSafeTranslations } from '@/hooks/useTypeSafeTranslations'
-import { trapTabKey } from '@/lib/focusTrap'
+import { getFocusableElements, trapTabKey } from '@/lib/focusTrap'
 import { mergeClasses } from '@/lib/merge-classes'
 import React, { ReactNode, useCallback, useEffect, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
@@ -88,7 +88,8 @@ export default function Modal({
       // Focus the modal content when it opens
       // We use requestAnimationFrame to ensure the element is ready to receive focus
       requestAnimationFrame(() => {
-        contentRef.current?.focus()
+        // Unless something inside took the focus already, like the first button of a confirm dialog
+        if (!contentRef.current?.contains(document.activeElement)) contentRef.current?.focus()
       })
     }
     return () => {
@@ -99,26 +100,51 @@ export default function Modal({
     }
   }, [isOpen])
 
-  // A focused control that gets removed or disabled (a deleted pill, the save button while saving)
-  // drops the focus to the page behind the modal. Take it back so keyboard and screen reader users stay inside.
+  // The focus stays inside the open modal, and at the same place. A focused control that gets removed or
+  // gives the focus up would drop it to the page behind the modal, where a screen reader loses its position.
+  // (A button that gets disabled keeps the focus by itself, see ButtonBase.)
   useEffect(() => {
-    if (!isOpen) return
+    const content = contentRef.current
+    if (!isOpen || !content) return
 
-    const restoreFocus = () => {
-      if (getTopmostModalElement() !== wrapperRef.current) return
-      // After the click handlers have updated the modal
-      setTimeout(() => {
-        if (document.activeElement === document.body) contentRef.current?.focus()
-      }, 100)
+    const countControlsBefore = (element: HTMLElement, root: HTMLElement = content) =>
+      getFocusableElements(root).filter((control) => control.compareDocumentPosition(element) & Node.DOCUMENT_POSITION_FOLLOWING).length
+
+    /** The control that had the focus last, and how many controls of the modal came before it */
+    let last: { element: HTMLElement; position: number } = { element: content, position: 0 }
+
+    const rememberFocus = (e: FocusEvent) => {
+      const element = e.target as HTMLElement
+      last = { element, position: countControlsBefore(element) }
     }
 
-    // Not every browser reports the lost focus, so also look after each click.
-    // Capture phase, because the modal content stops clicks from bubbling.
-    document.addEventListener('focusout', restoreFocus)
-    document.addEventListener('click', restoreFocus, { capture: true })
+    // Back to that control. If it is disabled now or gone, the control that comes right after its place gets the focus.
+    const restoreFocus = () => {
+      if (document.activeElement !== document.body || getTopmostModalElement() !== wrapperRef.current) return
+      last.element.focus()
+      if (document.activeElement !== document.body) return
+      const controls = getFocusableElements(content)
+      // Of the controls that came before a removed one, those that were removed along with it do not count anymore
+      const position = last.element.isConnected
+        ? countControlsBefore(last.element)
+        : last.position - countControlsBefore(last.element, last.element.getRootNode() as HTMLElement)
+      ;(controls[Math.min(position, controls.length - 1)] ?? content).focus()
+    }
+    // Before the next frame, once the code that took the focus away or changed the modal is done.
+    // Not right away, because the focus is nowhere for a moment as well while it moves to another control.
+    const checkFocus = () => requestAnimationFrame(restoreFocus)
+    // A removed control gives no sign, so also look when the page changes while the focus is nowhere
+    const observer = new MutationObserver(() => {
+      if (document.activeElement === document.body) checkFocus()
+    })
+
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true })
+    content.addEventListener('focusin', rememberFocus)
+    content.addEventListener('focusout', checkFocus)
     return () => {
-      document.removeEventListener('focusout', restoreFocus)
-      document.removeEventListener('click', restoreFocus, { capture: true })
+      observer.disconnect()
+      content.removeEventListener('focusin', rememberFocus)
+      content.removeEventListener('focusout', checkFocus)
     }
   }, [isOpen])
 
@@ -143,7 +169,8 @@ export default function Modal({
   }, [isOpen, processing, persistent, onClose])
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    trapTabKey(e, contentRef.current)
+    // Key presses in a nested modal arrive here as well, and its Tab key must not move the focus into this one
+    if (getTopmostModalElement() === wrapperRef.current) trapTabKey(e, contentRef.current)
   }, [])
 
   if (!isOpen) {

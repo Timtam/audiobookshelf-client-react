@@ -2,7 +2,7 @@
 
 import { mergeClasses } from '@/lib/merge-classes'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 
 interface ButtonBaseProps {
   id?: string
@@ -14,6 +14,8 @@ interface ButtonBaseProps {
   onClick?: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void
   onMouseDown?: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void
   onKeyDown?: (e: React.KeyboardEvent<HTMLButtonElement | HTMLAnchorElement>) => void
+  onFocus?: (e: React.FocusEvent<HTMLButtonElement | HTMLAnchorElement>) => void
+  onBlur?: (e: React.FocusEvent<HTMLButtonElement | HTMLAnchorElement>) => void
   type?: 'button' | 'submit' | 'reset'
   ariaLabel?: string
   className?: string
@@ -33,11 +35,20 @@ const ButtonBase = ({
   onClick,
   onMouseDown,
   onKeyDown,
+  onFocus,
+  onBlur,
   type = 'button',
   ariaLabel,
   ref,
   ...props
 }: ButtonBaseProps) => {
+  // The browser takes the focus away from a button that gets disabled, and a screen reader loses its place.
+  // So a button that gets disabled while it has the focus (Save, a loading button, a stepper at its limit)
+  // keeps it and is only marked as disabled, until the focus moves on. It looks the same, see the
+  // disabled variant in globals.css.
+  const [hasFocus, setHasFocus] = useState(false)
+  const keepsFocus = disabled && hasFocus
+
   const buttonClass = mergeClasses(
     // Base styles
     'relative shadow-md border border-border rounded-md bg-primary flex items-center justify-center overflow-hidden',
@@ -65,6 +76,8 @@ const ButtonBase = ({
   )
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+    // A submit button that only keeps the focus must not submit its form
+    if (keepsFocus) e.preventDefault()
     if (onClick && !disabled) {
       onClick(e)
     }
@@ -80,6 +93,8 @@ const ButtonBase = ({
         onClick={handleClick}
         onMouseDown={onMouseDown}
         onKeyDown={onKeyDown}
+        onFocus={onFocus}
+        onBlur={onBlur}
         style={{ pointerEvents: isDisabled ? 'none' : 'auto' }}
         tabIndex={isDisabled ? -1 : 0}
         aria-disabled={isDisabled}
@@ -96,11 +111,21 @@ const ButtonBase = ({
       id={id}
       ref={ref}
       type={type}
-      disabled={disabled}
+      disabled={disabled && !keepsFocus}
+      aria-disabled={keepsFocus || undefined}
       className={buttonClass}
       onClick={handleClick}
       onMouseDown={onMouseDown}
       onKeyDown={onKeyDown}
+      onFocus={(e) => {
+        setHasFocus(true)
+        onFocus?.(e)
+      }}
+      onBlur={(e) => {
+        // The button still has the focus when it is only the window that loses it
+        if (document.activeElement !== e.currentTarget) setHasFocus(false)
+        onBlur?.(e)
+      }}
       aria-label={ariaLabel}
       {...props}
     >

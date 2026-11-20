@@ -300,7 +300,7 @@ export default function UploadClient() {
           <label htmlFor="folder" className="mb-1 block px-1 text-sm font-medium">
             {t('LabelFolder')}
           </label>
-          <Dropdown items={folderItems} value={selectedFolder} onChange={(value) => setSelectedFolder(value as string)} />
+          <Dropdown ariaLabel={t('LabelFolder')} items={folderItems} value={selectedFolder} onChange={(value) => setSelectedFolder(value as string)} />
         </div>
 
         <div className="w-32 min-w-32">
@@ -322,7 +322,12 @@ export default function UploadClient() {
             <label htmlFor="provider" className="mb-1 block px-1 text-sm font-medium">
               {t('LabelProvider')}
             </label>
-            <Dropdown items={bookProviders} value={selectedProvider} onChange={(value) => setSelectedProvider(value as string)} />
+            <Dropdown
+              ariaLabel={t('LabelProvider')}
+              items={bookProviders}
+              value={selectedProvider}
+              onChange={(value) => setSelectedProvider(value as string)}
+            />
           </div>
         </div>
       )}

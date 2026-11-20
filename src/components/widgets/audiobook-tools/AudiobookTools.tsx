@@ -35,6 +35,7 @@ export default function AudiobookTools({ libraryItem: initialLibraryItem }: Audi
           <div className="flex justify-end">
             <Dropdown
               value={tools.selectedTool}
+              ariaLabel={t('HeaderTools')}
               items={tools.toolDropdownItems}
               disabled={tools.processing}
               className="max-w-sm"

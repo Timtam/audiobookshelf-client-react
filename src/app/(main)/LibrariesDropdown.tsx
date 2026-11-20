@@ -3,6 +3,7 @@
 import Dropdown from '@/components/ui/Dropdown'
 import LibraryIcon from '@/components/ui/LibraryIcon'
 import { isLibraryPageAllowed } from '@/hooks/useLibraryRouteGuard'
+import { useTypeSafeTranslations } from '@/hooks/useTypeSafeTranslations'
 import { attemptGuardedNavigation } from '@/hooks/useUnsavedNavigationGuard'
 import { sanitizeLibrarySwitchSearch } from '@/lib/libraryMediaTypeSortFilter'
 import { mergeClasses } from '@/lib/merge-classes'
@@ -57,6 +58,7 @@ function getLibrarySwitchPath(
 }
 
 export default function LibrariesDropdown({ libraries, currentLibraryId }: LibrariesDropdownProps) {
+  const t = useTypeSafeTranslations()
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -97,6 +99,7 @@ export default function LibrariesDropdown({ libraries, currentLibraryId }: Libra
       <div className="col-start-1 row-start-1 min-w-0">
         <Dropdown
           items={libraryItems}
+          ariaLabel={t('LabelLibrary')}
           menuMaxHeight="80vh"
           size="small"
           disabled={isPending}

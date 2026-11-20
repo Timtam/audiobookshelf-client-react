@@ -200,6 +200,7 @@ export default function ShareModal({ isOpen, onClose, mediaItemId, mediaItemShar
                     <TextInput
                       value={newShareDuration}
                       onChange={handleDurationChange}
+                      ariaLabel={t('LabelDuration')}
                       type="number"
                       step={1}
                       min={0}
@@ -207,7 +208,12 @@ export default function ShareModal({ isOpen, onClose, mediaItemId, mediaItemShar
                       customInputClass="text-center"
                     />
                     <div className="w-28">
-                      <Dropdown value={shareDurationUnit} items={durationUnits} onChange={(value) => setShareDurationUnit(value as ShareDurationUnit)} />
+                      <Dropdown
+                        value={shareDurationUnit}
+                        ariaLabel={t('LabelDuration')}
+                        items={durationUnits}
+                        onChange={(value) => setShareDurationUnit(value as ShareDurationUnit)}
+                      />
                     </div>
                   </div>
                 </div>

@@ -74,6 +74,7 @@ export default function BatchQuickMatchModal({ isOpen, onClose, libraryItemIds, 
                 <Dropdown
                   items={providerItems}
                   value={provider}
+                  ariaLabel={t('LabelProvider')}
                   onChange={(value) => setProvider(String(value))}
                   size="small"
                   disabled={isPending || providerItems.length === 0}

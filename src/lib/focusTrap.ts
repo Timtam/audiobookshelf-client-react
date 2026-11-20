@@ -1,6 +1,11 @@
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
+/** The controls inside `container` that can take the keyboard focus, in document order */
+export function getFocusableElements(container: HTMLElement): HTMLElement[] {
+  return Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR))
+}
+
 interface TabTrapEvent {
   key: string
   shiftKey: boolean
@@ -15,7 +20,7 @@ interface TabTrapEvent {
 export function trapTabKey(event: TabTrapEvent, container: HTMLElement | null, fallback?: HTMLElement | null): void {
   if (event.key !== 'Tab' || !container) return
 
-  const focusable = container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+  const focusable = getFocusableElements(container)
   const first = focusable[0]
   const last = focusable[focusable.length - 1]
 

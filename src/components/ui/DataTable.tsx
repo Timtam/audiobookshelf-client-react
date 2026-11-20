@@ -137,7 +137,13 @@ function DataTablePagination({
       <div className="flex items-center gap-2">
         <span className="text-foreground text-sm">{rowsPerPageLabel ?? t('LabelRowsPerPage')}</span>
         <div className="w-20">
-          <Dropdown value={rowsPerPage} items={dropdownItems} onChange={(value) => onRowsPerPageChange(value as number)} size="small" />
+          <Dropdown
+            value={rowsPerPage}
+            ariaLabel={rowsPerPageLabel ?? t('LabelRowsPerPage')}
+            items={dropdownItems}
+            onChange={(value) => onRowsPerPageChange(value as number)}
+            size="small"
+          />
         </div>
       </div>
       <div className="flex items-center gap-4">

@@ -145,6 +145,7 @@ export default function EditApiKeyModal({ isOpen, apiKey, users, onClose, onSubm
 
             <Dropdown
               value={formData.userId}
+              ariaLabel={t('LabelApiKeyUser')}
               items={userItems}
               disabled={isExpired}
               highlightSelected
