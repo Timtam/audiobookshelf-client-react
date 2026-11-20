@@ -12,6 +12,8 @@ export interface InputWrapperProps {
   className?: string
   inputRef?: React.RefObject<HTMLElement | null>
   wrapperRef?: React.RefObject<HTMLDivElement | null>
+  /** Runs on a click anywhere in the wrapper, before the wrapper moves the focus into the control */
+  onClick?: () => void
 }
 
 const InputWrapper = ({
@@ -23,7 +25,8 @@ const InputWrapper = ({
   size = 'medium',
   className,
   inputRef,
-  wrapperRef
+  wrapperRef,
+  onClick
 }: InputWrapperProps) => {
   const wrapperClass = mergeClasses(
     // Base styles
@@ -46,6 +49,7 @@ const InputWrapper = ({
   )
 
   const handleClick = () => {
+    onClick?.()
     if (!disabled) {
       if (document.activeElement !== inputRef?.current) {
         inputRef?.current?.focus()
@@ -55,7 +59,9 @@ const InputWrapper = ({
 
   return (
     <>
-      <div ref={wrapperRef} className={wrapperClass} cy-id="control-wrapper" onClick={handleClick}>
+      {/* Only a frame around the control. Its click handler moves the focus into the control, and without the
+          role a screen reader announces the frame as clickable. */}
+      <div ref={wrapperRef} role="presentation" className={wrapperClass} cy-id="control-wrapper" onClick={handleClick}>
         {children}
       </div>
       {typeof error === 'string' && error && <div className="text-error mt-1 text-sm">{error}</div>}

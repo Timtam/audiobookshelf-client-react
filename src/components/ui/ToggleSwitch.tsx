@@ -96,6 +96,8 @@ export default function ToggleSwitch({
       <div
         cy-id="toggle-and-label-wrapper"
         ref={wrapperRef}
+        // Like the InputWrapper around it, not announced as clickable
+        role="presentation"
         className="flex items-center justify-start px-1 py-1"
         onMouseDown={(e) => e.preventDefault()}
         onClick={handleWrapperClick}
