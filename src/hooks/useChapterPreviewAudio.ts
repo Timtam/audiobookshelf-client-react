@@ -39,7 +39,7 @@ export function useChapterPreviewAudio({ tracks }: UseChapterPreviewAudioOptions
     playStartTimeRef.current = null
   }, [])
 
-  const destroyAudioEl = useCallback(() => {
+  const removeAudioEl = useCallback(() => {
     if (audioElRef.current) {
       audioElRef.current.pause()
       audioElRef.current.removeAttribute('src')
@@ -47,11 +47,21 @@ export function useChapterPreviewAudio({ tracks }: UseChapterPreviewAudioOptions
       audioElRef.current.remove()
       audioElRef.current = null
     }
+  }, [])
+
+  /** Stops the preview. The audio element stays, so that another chapter of the same file plays without loading the file again. */
+  const stopChapter = useCallback(() => {
+    audioElRef.current?.pause()
     setSelectedChapterId(null)
     setIsPlayingChapter(false)
     setIsLoadingChapter(false)
     stopElapsedTimeTracking()
   }, [stopElapsedTimeTracking])
+
+  const destroyAudioEl = useCallback(() => {
+    removeAudioEl()
+    stopChapter()
+  }, [removeAudioEl, stopChapter])
 
   const startElapsedTimeTracking = useCallback(() => {
     if (elapsedIntervalRef.current) return
@@ -72,16 +82,26 @@ export function useChapterPreviewAudio({ tracks }: UseChapterPreviewAudioOptions
         setIsLoadingChapter(true)
       }
 
-      const audioEl = document.createElement('audio')
-      audioEl.src = withBasePath(chapterPreviewPath(audioTrack.contentUrl))
-      audioEl.id = 'chapter-audio'
-      document.body.appendChild(audioEl)
-      audioElRef.current = audioEl
-
-      const handleLoadedData = () => {
+      const src = withBasePath(chapterPreviewPath(audioTrack.contentUrl))
+      const startPlayback = (audioEl: HTMLAudioElement) => {
         audioEl.currentTime = trackOffset
         void audioEl.play()
       }
+
+      // For the file of the last preview the browser only has to seek. A new element would load the index
+      // of the file again, which is several megabytes for a long m4b file and takes seconds on a slow connection.
+      const loadedAudioEl = audioElRef.current
+      if (loadedAudioEl?.getAttribute('src') === src && loadedAudioEl.readyState >= HTMLMediaElement.HAVE_METADATA) {
+        startPlayback(loadedAudioEl)
+        return
+      }
+      removeAudioEl()
+
+      const audioEl = document.createElement('audio')
+      audioEl.src = src
+      audioEl.id = 'chapter-audio'
+      document.body.appendChild(audioEl)
+      audioElRef.current = audioEl
 
       const handlePlay = () => {
         setIsLoadingChapter(false)
@@ -102,11 +122,12 @@ export function useChapterPreviewAudio({ tracks }: UseChapterPreviewAudioOptions
         }
       }
 
-      audioEl.addEventListener('loadeddata', handleLoadedData, { once: true })
-      audioEl.addEventListener('play', handlePlay, { once: true })
+      // Seeking only needs the metadata. Waiting for audio data would load the start of the file first.
+      audioEl.addEventListener('loadedmetadata', () => startPlayback(audioEl), { once: true })
+      audioEl.addEventListener('play', handlePlay)
       audioEl.addEventListener('ended', handleEnded, { once: true })
     },
-    [destroyAudioEl, startElapsedTimeTracking]
+    [destroyAudioEl, removeAudioEl, startElapsedTimeTracking]
   )
 
   const playChapter = useCallback(
@@ -114,13 +135,13 @@ export function useChapterPreviewAudio({ tracks }: UseChapterPreviewAudioOptions
       if (selectedChapterId === chapterId) {
         if (isLoadingChapter) return
         if (isPlayingChapter) {
-          destroyAudioEl()
+          stopChapter()
           return
         }
       }
 
       if (selectedChapterId !== null) {
-        destroyAudioEl()
+        stopChapter()
       }
 
       const audioTrack = getAudioTrackForTime(tracks, chapterStart)
@@ -131,7 +152,7 @@ export function useChapterPreviewAudio({ tracks }: UseChapterPreviewAudioOptions
       setSelectedChapterId(chapterId)
       playTrackAtTime(audioTrack, chapterStart - audioTrack.startOffset)
     },
-    [destroyAudioEl, isLoadingChapter, isPlayingChapter, playTrackAtTime, selectedChapterId, tracks]
+    [isLoadingChapter, isPlayingChapter, playTrackAtTime, selectedChapterId, stopChapter, tracks]
   )
 
   useEffect(() => {
