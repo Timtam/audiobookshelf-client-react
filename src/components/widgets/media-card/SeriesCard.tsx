@@ -264,7 +264,7 @@ function SeriesCard(props: SeriesCardProps) {
         isAlternativeBookshelfView ? (
           // Detail view footer
           <div cy-id="detailBottomText" className="relative inset-s-0 inset-e-0 z-30 mx-auto rounded-md py-[0.25em] text-center">
-            <p cy-id="detailBottomDisplayTitle" className="truncate" style={{ fontSize: `${labelFontSize}em` }}>
+            <p cy-id="detailBottomDisplayTitle" className="truncate" style={{ fontSize: `${labelFontSize}em` }} role="heading" aria-level={3}>
               {displayTitle}
             </p>
             {displaySortLine && (

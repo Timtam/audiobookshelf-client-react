@@ -77,6 +77,8 @@ export default function Toolbar() {
   const showToolbarExtras = isBookshelfPage && itemCount !== null && !isBookshelfEmpty && !isSeriesDetailPage && !isSearchPage && !isSelectionMode
   const showContextMenu = contextMenuItems.length > 0 && (!isBookshelfEmpty || isSeriesDetailPage) && !isSearchPage && !isSelectionMode
   const countBadgeLabel = itemName ? `${itemCount} ${itemName}` : String(itemCount)
+  // The summary is the page heading, except on collection and playlist pages which have their own title
+  const summaryHeadingProps = isCollectionDetailPage || isPlaylistDetailPage ? {} : ({ role: 'heading', 'aria-level': 1 } as const)
 
   return (
     <div className="bg-bg box-shadow-toolbar relative z-40 h-10 w-full" cy-id="library-toolbar">
@@ -84,7 +86,7 @@ export default function Toolbar() {
         {showSearchSummary && (
           <>
             <div className="grow" />
-            <p className="text-foreground text-base">
+            <p className="text-foreground text-base" role="heading" aria-level={1}>
               {t('MessageSearchResultsFor')} &quot;{searchQuery}&quot;
             </p>
             <div className="grow" />
@@ -93,7 +95,7 @@ export default function Toolbar() {
 
         {showBookshelfSummary && (
           <>
-            <p className="text-foreground hidden text-base md:block">
+            <p className="text-foreground hidden text-base md:block" {...summaryHeadingProps}>
               <span>
                 {itemCount} {itemName}
               </span>
@@ -101,6 +103,7 @@ export default function Toolbar() {
             </p>
             <div
               className="bg-foreground/10 flex h-6 min-w-6 shrink-0 items-center justify-center rounded-full px-1.5 font-mono text-sm md:hidden"
+              {...summaryHeadingProps}
               aria-label={countBadgeLabel}
               title={countBadgeLabel}
             >
@@ -112,13 +115,15 @@ export default function Toolbar() {
         {showSeriesDetailSummary && (
           <>
             <div className="hidden min-w-0 flex-1 md:block">
-              <p className="text-foreground truncate text-base" title={detailToolbarTitle ?? ''}>
+              <p className="text-foreground truncate text-base" role="heading" aria-level={1} title={detailToolbarTitle ?? ''}>
                 <span>{detailToolbarTitle}</span>
                 <span className="text-foreground-muted"> {itemCount ? `(${itemCount})` : ''}</span>
               </p>
             </div>
             <div
               className="bg-foreground/10 flex h-6 min-w-6 shrink-0 items-center justify-center rounded-full px-1.5 font-mono text-sm md:hidden"
+              role="heading"
+              aria-level={1}
               aria-label={`${detailToolbarTitle} (${itemCount})`}
               title={`${detailToolbarTitle} (${itemCount})`}
             >

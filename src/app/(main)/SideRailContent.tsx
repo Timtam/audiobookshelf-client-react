@@ -176,6 +176,7 @@ export default function SideRailContent({
               key={button.label}
               href={button.href}
               onClick={onItemClick ?? undefined}
+              aria-current={isActive ? 'page' : undefined}
               className={mergeClasses(
                 'text-foreground hover:bg-nav-item-hover relative w-full cursor-pointer border-b transition-colors',
                 itemLayoutClass,
@@ -187,6 +188,7 @@ export default function SideRailContent({
                   'shrink-0',
                   isDrawer ? 'me-3 flex items-center [&_.abs-icons]:text-xl [&_.material-symbols]:text-xl [&_svg]:h-5 [&_svg]:w-5' : ''
                 )}
+                aria-hidden="true"
               >
                 {button.icon}
               </span>
@@ -203,13 +205,14 @@ export default function SideRailContent({
           <Link
             href={issuesHref}
             onClick={onItemClick ?? undefined}
+            aria-current={onIssuesPage ? 'page' : undefined}
             className={mergeClasses(
               'text-foreground relative w-full cursor-pointer border-b transition-colors',
               itemLayoutClass,
               onIssuesPage ? 'bg-error/40 hover:bg-error/40' : 'bg-error/20 hover:bg-error/40'
             )}
           >
-            <span className={mergeClasses('shrink-0', isDrawer ? 'me-3 flex items-center [&_.material-symbols]:text-xl' : '')}>
+            <span className={mergeClasses('shrink-0', isDrawer ? 'me-3 flex items-center [&_.material-symbols]:text-xl' : '')} aria-hidden="true">
               <span className="material-symbols text-2xl">warning</span>
             </span>
             <span className={itemLabelClass} title={t('ButtonIssues')}>

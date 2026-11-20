@@ -135,7 +135,7 @@ export default function CollapsibleSection({
       <div id={headerId} className={headerClasses} onClick={handleHeaderClick}>
         <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1 border-none bg-transparent p-0 text-left text-inherit md:gap-2">
           <div className="flex min-w-0 shrink-0 items-center gap-2">
-            <p className="overflow-hidden font-medium text-ellipsis whitespace-nowrap">{title}</p>
+            <h2 className="overflow-hidden font-medium text-ellipsis whitespace-nowrap">{title}</h2>
             {count !== undefined && (
               <div className={countBadgeClasses} aria-label={countAriaLabel} role="status">
                 <span className="font-mono text-sm" aria-hidden="true">
@@ -166,7 +166,7 @@ export default function CollapsibleSection({
             onKeyDown={handleKeyDown}
             aria-expanded={isExpanded}
             aria-controls={contentId}
-            ariaLabel={isExpanded ? t('LabelCollapse') : t('LabelExpand')}
+            ariaLabel={title}
           >
             keyboard_arrow_down
           </IconBtn>
