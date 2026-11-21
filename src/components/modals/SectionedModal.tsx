@@ -2,6 +2,7 @@
 
 import IconBtn from '@/components/ui/IconBtn'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { useTabs } from '@/hooks/useTabs'
 import { useTypeSafeTranslations } from '@/hooks/useTypeSafeTranslations'
 import { mergeClasses } from '@/lib/merge-classes'
 import { useEffect, useState, type ReactNode } from 'react'
@@ -41,6 +42,7 @@ export function SectionedModalBody({
 }: SectionedModalBodyProps) {
   const t = useTypeSafeTranslations()
   const isMobile = useMediaQuery('max-md')
+  const { tabListProps, getTabProps, tabPanelProps } = useTabs(selectedSection, 'vertical')
   const [mobileScreen, setMobileScreen] = useState<'hub' | string>(initialSection ?? 'hub')
 
   useEffect(() => {
@@ -115,14 +117,14 @@ export function SectionedModalBody({
 
   return (
     <div className={mergeClasses('flex min-w-0 flex-1 flex-row overflow-hidden rounded-lg', SECTIONED_MODAL_STABLE_HEIGHT_CLASS, className)}>
-      <nav className="border-border bg-bg flex w-20 min-w-20 shrink-0 flex-col border-e" aria-label={t('AriaLabelModalSections')}>
+      <nav {...tabListProps} className="border-border bg-bg flex w-20 min-w-20 shrink-0 flex-col border-e" aria-label={t('AriaLabelModalSections')}>
         {sections.map((item) => {
           const isActive = item.id === selectedSection
           return (
             <button
               key={item.id}
               type="button"
-              aria-current={isActive || undefined}
+              {...getTabProps(item.id)}
               onClick={() => onSectionChange(item.id)}
               className={mergeClasses(
                 'text-foreground hover:bg-nav-item-hover border-primary/30 relative flex h-20 w-full flex-col items-center justify-center border-b transition-colors',
@@ -138,7 +140,9 @@ export function SectionedModalBody({
           )
         })}
       </nav>
-      <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">{children}</div>
+      <div {...tabPanelProps} className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+        {children}
+      </div>
     </div>
   )
 }

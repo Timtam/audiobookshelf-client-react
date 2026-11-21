@@ -121,8 +121,7 @@ export default function MatchCard({ book, isPodcast = false, currentBookDuration
     <div
       ref={cardRef}
       tabIndex={0}
-      role="option"
-      aria-selected={isFocused}
+      role="listitem"
       aria-label={`Select ${book.title}`}
       className={mergeClasses('hover:bg-bg-hover/50 w-full cursor-pointer rounded border p-3', 'border-border', 'focus:border-foreground', 'outline-none')}
       onClick={handleSelect}
@@ -240,6 +239,8 @@ export default function MatchCard({ book, isPodcast = false, currentBookDuration
                 'cursor-pointer border-2 border-transparent hover:border-yellow-300',
                 cover === finalSelectedCover ? 'border-yellow-200' : ''
               )}
+              // Has no name and no keyboard support, so it stays hidden from screen readers like it was inside the listbox option
+              role="presentation"
               onClick={(e) => handleCoverClick(e, cover)}
             >
               <div className="relative mr-1 h-20 w-12">

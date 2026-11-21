@@ -327,7 +327,8 @@ export default function Match({
 
   const handleContainerKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      if (e.key === 'ArrowDown' && searchResults.length > 0) {
+      // Only for a key press on the list itself. One on a result arrives here as well, and the result has handled it.
+      if (e.target === e.currentTarget && e.key === 'ArrowDown' && searchResults.length > 0) {
         e.preventDefault()
         setFocusedCardIndex(0)
       }
@@ -431,7 +432,12 @@ export default function Match({
               className="mt-4 flex flex-1 flex-col gap-2 overflow-x-clip px-1 md:mx-0 md:min-h-0 md:overflow-y-auto md:px-0"
               style={{ paddingRight: hasScrollbar ? '1rem' : '0' }}
               onKeyDown={handleContainerKeyDown}
-              role="listbox"
+              // The index only asks for the focus to move. It is cleared once the focus has moved, so that the next
+              // arrow key sets it anew, also after the Tab key or the mouse moved the focus to another result.
+              onBlur={() => setFocusedCardIndex(null)}
+              // A list and not a listbox: a screen reader treats a listbox as one control, shows only one
+              // result of it at a time and repeats the name of the list on every line of that result
+              role="list"
               aria-label={t('AriaLabelSearchResults')}
             >
               {searchResults.map((result, index) => (

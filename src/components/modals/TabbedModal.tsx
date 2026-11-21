@@ -1,5 +1,6 @@
 'use client'
 
+import { useTabs } from '@/hooks/useTabs'
 import { mergeClasses } from '@/lib/merge-classes'
 import React, { ReactNode } from 'react'
 import Modal from './Modal'
@@ -44,6 +45,8 @@ export default function TabbedModal({
   contentClassName,
   style
 }: TabbedModalProps) {
+  const { tabListProps, getTabProps, tabPanelProps } = useTabs(selectedTab)
+
   return (
     <Modal
       isOpen={isOpen}
@@ -57,15 +60,13 @@ export default function TabbedModal({
       style={style}
     >
       {/* Tabs bar */}
-      <div className="flex shrink-0 gap-1 pr-2" role="tablist">
+      <div {...tabListProps} className="flex shrink-0 gap-1 pr-2">
         {tabs.map((tab) => {
           const isActive = tab.id === selectedTab
           return (
             <button
               key={tab.id}
-              role="tab"
-              aria-selected={isActive}
-              aria-controls={`tabpanel-${tab.id}`}
+              {...getTabProps(tab.id)}
               className={mergeClasses(
                 'max-w-28 flex-1 cursor-pointer px-2 py-2 text-sm font-medium transition-colors select-none sm:px-4 sm:text-base',
                 'border-border -mb-px rounded-t-lg border',
@@ -82,12 +83,7 @@ export default function TabbedModal({
       {/* Modal content */}
       <div className="bg-bg shadow-modal-content border-border flex flex-col rounded-tr-lg rounded-b-lg border-t">
         {/* Tab content */}
-        <div
-          id={`tabpanel-${selectedTab}`}
-          role="tabpanel"
-          className={mergeClasses('min-h-0 overflow-y-auto', contentClassName)}
-          onClick={(e) => e.stopPropagation()}
-        >
+        <div {...tabPanelProps} className={mergeClasses('min-h-0 overflow-y-auto', contentClassName)} onClick={(e) => e.stopPropagation()}>
           {children}
         </div>
 
